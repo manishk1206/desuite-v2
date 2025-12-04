@@ -63,7 +63,7 @@ export function HeroSection({}: HeroSectionProps) {
             data-testid="button-hero-book-demo"
           >
             <a 
-                href="YOUR_CALENDLY_LINK_HERE" // <-- !!! REPLACE WITH YOUR CALENDLY URL !!!
+                href="https://calendly.com/manishk1206/30min" // <-- !!! REPLACE WITH YOUR CALENDLY URL !!!
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center" 
