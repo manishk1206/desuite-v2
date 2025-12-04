@@ -11,8 +11,13 @@ export function HeroSection({}: HeroSectionProps) {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       <div className="absolute inset-0 gradient-mesh animate-gradient" />
       
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse-glow" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-chart-4/20 rounded-full blur-3xl animate-pulse-glow delay-1000" />
+      {/* MODIFIED: Changed back to colored glow, using transparent light green (bg-green-400/30) 
+          to match the Bridge website's vibrant flow aesthetic.
+      */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-400/30 rounded-full blur-3xl animate-pulse-glow" />
+      
+      {/* MODIFIED: Second glow also set to transparent light green. */}
+      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-green-400/30 rounded-full blur-3xl animate-pulse-glow delay-1000" />
       
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
@@ -90,7 +95,10 @@ export function HeroSection({}: HeroSectionProps) {
           className="mt-16 sm:mt-20"
         >
           <div className="relative mx-auto max-w-3xl">
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-chart-4/20 to-chart-2/20 rounded-2xl blur-xl" />
+            {/* MODIFIED: Changed the card's background blur to a green-based gradient.
+              This introduces the green glow around the dashboard card.
+            */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-green-400/30 via-green-400/30 to-green-400/30 rounded-2xl blur-xl" />
             <div className="relative bg-card border border-border rounded-xl p-4 sm:p-6 shadow-xl animate-float">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-3 h-3 rounded-full bg-red-400" />
