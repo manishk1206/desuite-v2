@@ -2,11 +2,11 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
-interface HeroSectionProps {
-  onBookDemo: () => void;
-}
+// Removed the 'onBookDemo' prop since the function is now a direct link.
+interface HeroSectionProps {}
 
-export function HeroSection({ onBookDemo }: HeroSectionProps) {
+// Removed the 'onBookDemo' argument from the function.
+export function HeroSection({}: HeroSectionProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       <div className="absolute inset-0 gradient-mesh animate-gradient" />
@@ -56,13 +56,21 @@ export function HeroSection({ onBookDemo }: HeroSectionProps) {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
+          {/* MODIFIED: Changed Button to use asChild for a direct Calendly link */}
           <Button
             size="lg"
-            onClick={onBookDemo}
+            asChild
             data-testid="button-hero-book-demo"
           >
-            Book a Demo
-            <ArrowRight className="ml-2 h-4 w-4" />
+            <a 
+                href="YOUR_CALENDLY_LINK_HERE" // <-- !!! REPLACE WITH YOUR CALENDLY URL !!!
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center" 
+            > 
+                Book a Demo
+                <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
           </Button>
           <Button
             size="lg"
@@ -82,49 +90,4 @@ export function HeroSection({ onBookDemo }: HeroSectionProps) {
           className="mt-16 sm:mt-20"
         >
           <div className="relative mx-auto max-w-3xl">
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-chart-4/20 to-chart-2/20 rounded-2xl blur-xl" />
-            <div className="relative bg-card border border-border rounded-xl p-4 sm:p-6 shadow-xl animate-float">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-3 h-3 rounded-full bg-red-400" />
-                <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                <div className="w-3 h-3 rounded-full bg-green-400" />
-                <span className="ml-2 text-xs text-muted-foreground font-mono">desuite-dashboard</span>
-              </div>
-              <div className="grid grid-cols-3 gap-3 sm:gap-4">
-                <div className="bg-accent/50 rounded-lg p-3 sm:p-4" data-testid="stat-volume">
-                  <div className="text-xs text-muted-foreground mb-1">Total Volume</div>
-                  <div className="text-lg sm:text-xl font-display font-semibold" data-testid="text-volume-value">$2.4M</div>
-                  <div className="text-xs text-green-500 mt-1">+12.5%</div>
-                </div>
-                <div className="bg-accent/50 rounded-lg p-3 sm:p-4" data-testid="stat-transactions">
-                  <div className="text-xs text-muted-foreground mb-1">Transactions</div>
-                  <div className="text-lg sm:text-xl font-display font-semibold" data-testid="text-transactions-value">1,284</div>
-                  <div className="text-xs text-green-500 mt-1">+8.3%</div>
-                </div>
-                <div className="bg-accent/50 rounded-lg p-3 sm:p-4" data-testid="stat-assets">
-                  <div className="text-xs text-muted-foreground mb-1">Assets</div>
-                  <div className="text-lg sm:text-xl font-display font-semibold" data-testid="text-assets-value">48</div>
-                  <div className="text-xs text-muted-foreground mt-1">Tokenized</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-        >
-          <a href="#product" className="text-muted-foreground hover:text-foreground transition-colors">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-          </a>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
+            <div className="absolute -inset
