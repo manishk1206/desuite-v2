@@ -79,19 +79,22 @@ export function ProblemSolutionSection() {
             viewport={{ once: true }}
           >
             <div className="mb-6">
-              <span className="text-sm font-medium text-destructive/80 uppercase tracking-wider">The Challenge</span>
+              {/* Corrected: Changed text-destructive to a soft, professional slate color */}
+              <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">The Challenge</span>
             </div>
             <div className="space-y-6">
               {problems.map((problem, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
-                  className="flex gap-4 p-4 rounded-xl bg-destructive/5 border border-destructive/10"
+                  // Corrected: Changed destructive background/border to slate-based
+                  className="flex gap-4 p-4 rounded-xl bg-slate-500/5 border border-slate-500/10"
                   data-testid={`card-problem-${index}`}
                 >
                   <div className="flex-shrink-0">
-                    <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center">
-                      <problem.icon className="w-5 h-5 text-destructive/70" />
+                    {/* Corrected: Changed destructive background/icon color to slate-based */}
+                    <div className="w-10 h-10 rounded-lg bg-slate-500/10 flex items-center justify-center">
+                      <problem.icon className="w-5 h-5 text-slate-500" />
                     </div>
                   </div>
                   <div>

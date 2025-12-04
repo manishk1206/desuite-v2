@@ -36,7 +36,7 @@ export function HeroSection({}: HeroSectionProps) {
           className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6"
           data-testid="text-hero-title"
         >
-          <span className="gradient-text">Stablecoin & Tokenization</span>
+          <span className="gradient-text">The Stablecoin & Tokenization</span>
           <br />
           <span>Layer for Oracle ERP</span>
         </motion.h1>
