@@ -43,10 +43,13 @@
   --chart-3: 272 65% 52%;
   --chart-4: 210 85% 55%;
   --chart-5: 295 70% 48%;
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-serif: Georgia, serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-display: 'Space Grotesk', sans-serif;
+ /* NEW ENTERPRISE FONT: INTER 
+    This updates the CSS variables used by your application's base styles.
+  */
+  --font-sans: "Inter", sans-serif;
+  --font-serif: Georgia, serif; /* Retain original serif font */
+  --font-mono: monospace; /* Retain original monospace font */
+  --font-display: "Inter", sans-serif;
   --radius: .5rem;
   --shadow-2xs: 0px 1px 2px 0px hsl(222 47% 11% / 0.03);
   --shadow-xs: 0px 1px 3px 0px hsl(222 47% 11% / 0.04);
