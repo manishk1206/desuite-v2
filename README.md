@@ -98,11 +98,6 @@ Preferred communication style: Simple, everyday language.
 - Drizzle ORM: Type-safe SQL query builder
 - drizzle-kit: Schema management and migrations
 
-**Development Tools**
-- @replit/vite-plugin-runtime-error-modal: Error overlay
-- @replit/vite-plugin-cartographer: Replit integration
-- @replit/vite-plugin-dev-banner: Development banner
-
 **Build & Tooling**
 - esbuild: Server-side bundling with selective dependency bundling
 - TypeScript: Type checking across client, server, and shared code
