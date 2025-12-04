@@ -80,7 +80,7 @@ export function ProblemSolutionSection() {
           >
             <div className="mb-6">
               {/* Corrected: Changed text-destructive to a soft, professional slate color */}
-              <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">The Challenge</span>
+              <span className="text-sm font-medium text-slate-500 tracking-wider">The Challenge</span>
             </div>
             <div className="space-y-6">
               {problems.map((problem, index) => (
