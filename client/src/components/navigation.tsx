@@ -4,7 +4,6 @@ import { ThemeToggle } from "./theme-toggle";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// 1. Removed the broken 'onBookDemo' prop
 interface NavigationProps {}
 
 const navItems = [
@@ -14,7 +13,6 @@ const navItems = [
   { label: "Enterprise", href: "#enterprise" },
 ];
 
-// 2. Removed the 'onBookDemo' argument
 export function Navigation({}: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -63,14 +61,14 @@ export function Navigation({}: NavigationProps) {
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            {/* MODIFIED: Desktop Button now a direct Calendly link */}
+            {/* CORRECTED: Desktop Button now uses the real Calendly link */}
             <Button
               asChild
               className="hidden sm:inline-flex"
               data-testid="button-nav-book-demo"
             >
               <a 
-                href="YOUR_CALENDLY_LINK_HERE" 
+                href="https://calendly.com/manishk1206/30min" 
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -115,7 +113,7 @@ export function Navigation({}: NavigationProps) {
                   {item.label}
                 </a>
               ))}
-              {/* MODIFIED: Mobile Button now a direct Calendly link */}
+              {/* CORRECTED: Mobile Button now uses the real Calendly link */}
               <Button
                 asChild
                 className="w-full mt-4"
@@ -124,7 +122,7 @@ export function Navigation({}: NavigationProps) {
                 onClick={() => setIsMobileMenuOpen(false)} 
               >
                 <a 
-                  href="YOUR_CALENDLY_LINK_HERE"
+                  href="https://calendly.com/manishk1206/30min"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full text-center" // Ensure the mobile link spans the full width
