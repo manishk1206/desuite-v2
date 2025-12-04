@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme"; // Added to access default font stack
 
 export default {
   darkMode: ["class"],
@@ -82,10 +83,12 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
+        // OVERRIDE: Uses Inter for body/UI text, falling back to system sans fonts.
+        sans: ["Inter", ...fontFamily.sans],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
-        display: ["var(--font-display)"],
+        // OVERRIDE: Uses Inter for headings, falling back to system sans fonts.
+        display: ["Inter", ...fontFamily.sans],
       },
       keyframes: {
         "accordion-down": {
