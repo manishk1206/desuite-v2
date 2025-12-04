@@ -4,9 +4,8 @@ import { ThemeToggle } from "./theme-toggle";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface NavigationProps {
-  onBookDemo: () => void;
-}
+// 1. Removed the broken 'onBookDemo' prop
+interface NavigationProps {}
 
 const navItems = [
   { label: "Product", href: "#product" },
@@ -15,7 +14,8 @@ const navItems = [
   { label: "Enterprise", href: "#enterprise" },
 ];
 
-export function Navigation({ onBookDemo }: NavigationProps) {
+// 2. Removed the 'onBookDemo' argument
+export function Navigation({}: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -63,12 +63,19 @@ export function Navigation({ onBookDemo }: NavigationProps) {
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
+            {/* MODIFIED: Desktop Button now a direct Calendly link */}
             <Button
-              onClick={onBookDemo}
+              asChild
               className="hidden sm:inline-flex"
               data-testid="button-nav-book-demo"
             >
-              Book a Demo
+              <a 
+                href="YOUR_CALENDLY_LINK_HERE" 
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book a Demo
+              </a>
             </Button>
             <Button
               size="icon"
@@ -108,15 +115,22 @@ export function Navigation({ onBookDemo }: NavigationProps) {
                   {item.label}
                 </a>
               ))}
+              {/* MODIFIED: Mobile Button now a direct Calendly link */}
               <Button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  onBookDemo();
-                }}
+                asChild
                 className="w-full mt-4"
                 data-testid="button-mobile-book-demo"
+                // Only close the menu on click, the <a> tag handles navigation
+                onClick={() => setIsMobileMenuOpen(false)} 
               >
-                Book a Demo
+                <a 
+                  href="YOUR_CALENDLY_LINK_HERE"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full text-center" // Ensure the mobile link spans the full width
+                >
+                  Book a Demo
+                </a>
               </Button>
             </div>
           </motion.div>

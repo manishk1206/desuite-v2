@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Navigation } from "@/components/navigation";
 import { HeroSection } from "@/components/hero-section";
 import { ProblemSolutionSection } from "@/components/problem-solution-section";
@@ -8,29 +7,28 @@ import { PartnersSection } from "@/components/partners-section";
 import { TechArchitectureSection } from "@/components/tech-architecture-section";
 import { CTASection } from "@/components/cta-section";
 import { Footer } from "@/components/footer";
-import { DemoModal } from "@/components/demo-modal";
+// NOTE: Removed 'useState' and 'DemoModal' imports
 
 export default function Home() {
-  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
-
-  const handleBookDemo = () => {
-    setIsDemoModalOpen(true);
-  };
+  // NOTE: Removed state management and handler function for the modal
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation onBookDemo={handleBookDemo} />
+      {/* Removed onBookDemo prop */}
+      <Navigation /> 
       <main>
-        <HeroSection onBookDemo={handleBookDemo} />
+        {/* Removed onBookDemo prop */}
+        <HeroSection /> 
         <ProblemSolutionSection />
         <FlowDiagramSection />
         <FeaturesSection />
         <PartnersSection />
         <TechArchitectureSection />
-        <CTASection onBookDemo={handleBookDemo} />
+        {/* Removed onBookDemo prop */}
+        <CTASection />
       </main>
       <Footer />
-      <DemoModal open={isDemoModalOpen} onOpenChange={setIsDemoModalOpen} />
+      {/* Removed the DemoModal component */}
     </div>
   );
 }

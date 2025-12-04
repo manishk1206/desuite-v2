@@ -2,11 +2,11 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 
-interface CTASectionProps {
-  onBookDemo: () => void;
-}
+// 1. Removed the broken 'onBookDemo' prop
+interface CTASectionProps {}
 
-export function CTASection({ onBookDemo }: CTASectionProps) {
+// 2. Removed the 'onBookDemo' argument
+export function CTASection({}: CTASectionProps) {
   return (
     <section className="py-20 lg:py-32 relative overflow-hidden">
       <div className="absolute inset-0 cta-gradient" />
@@ -36,13 +36,21 @@ export function CTASection({ onBookDemo }: CTASectionProps) {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            {/* MODIFIED: Changed Button to use asChild for a direct Calendly link */}
             <Button
               size="lg"
-              onClick={onBookDemo}
+              asChild
               data-testid="button-cta-book-demo"
             >
-              Book a Demo
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <a 
+                href="https://calendly.com/manishk1206/30min" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center" 
+              >
+                Book a Demo
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
             </Button>
             <Button
               size="lg"
