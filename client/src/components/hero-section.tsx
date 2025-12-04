@@ -11,11 +11,11 @@ export function HeroSection({}: HeroSectionProps) {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       <div className="absolute inset-0 gradient-mesh animate-gradient" />
       
-      {/* MODIFIED: Reverting back to a very light, transparent white glow for a cleaner look. */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/50 rounded-full blur-3xl animate-pulse-glow" />
+      {/* RESTORED: Original glow using bg-primary/20 (the purple blush) */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse-glow" />
       
-      {/* MODIFIED: Second glow also set to transparent white. */}
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-white/50 rounded-full blur-3xl animate-pulse-glow delay-1000" />
+      {/* RESTORED: Original second glow using bg-chart-4/20 */}
+      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-chart-4/20 rounded-full blur-3xl animate-pulse-glow delay-1000" />
       
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
@@ -33,7 +33,7 @@ export function HeroSection({}: HeroSectionProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
+          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6"
           data-testid="text-hero-title"
         >
           <span className="gradient-text">Stablecoin & Tokenization</span>
@@ -93,10 +93,8 @@ export function HeroSection({}: HeroSectionProps) {
           className="mt-16 sm:mt-20"
         >
           <div className="relative mx-auto max-w-3xl">
-            {/* MODIFIED: Reverting the card's background blur to white-based gradient.
-              This removes the harsh green glow around the dashboard card.
-            */}
-            <div className="absolute -inset-4 bg-gradient-to-r from-white/30 via-white/30 to-white/30 rounded-2xl blur-xl" />
+            {/* RESTORED: Original card glow gradient (primary, chart-4, chart-2) */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-chart-4/20 to-chart-2/20 rounded-2xl blur-xl" />
             <div className="relative bg-card border border-border rounded-xl p-4 sm:p-6 shadow-xl animate-float">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-3 h-3 rounded-full bg-red-400" />
