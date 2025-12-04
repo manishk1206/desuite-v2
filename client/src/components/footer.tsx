@@ -61,7 +61,7 @@ export function Footer() {
             </p>
             <div className="flex gap-3">
               <a
-                href="https://twitter.com/desuite"
+                href="https://x.com/manishk_1206"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-lg bg-accent flex items-center justify-center hover-elevate transition-all"
@@ -73,7 +73,7 @@ export function Footer() {
                 </svg>
               </a>
               <a
-                href="https://linkedin.com/company/desuite"
+                href="https://www.linkedin.com/in/manish-kumar-0859ba55/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-lg bg-accent flex items-center justify-center hover-elevate transition-all"
@@ -85,7 +85,7 @@ export function Footer() {
                 </svg>
               </a>
               <a
-                href="https://github.com/desuite"
+                href="https://github.com/manishk1206"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-lg bg-accent flex items-center justify-center hover-elevate transition-all"
