@@ -16,7 +16,7 @@ const features = [
   {
     icon: Database,
     title: "Oracle Native",
-    description: "Purpose-built for Oracle Fusion, E-Business Suite, and NetSuite. No middleware complexity or custom development required.",
+    description: "Purpose-built for Oracle ERP. No middleware complexity or custom development required.",
   },
   {
     icon: Shield,

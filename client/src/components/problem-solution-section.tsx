@@ -113,7 +113,7 @@ export function ProblemSolutionSection() {
             viewport={{ once: true }}
           >
             <div className="mb-6">
-              <span className="text-sm font-medium text-primary tracking-wider">The DeSuite Solution</span>
+              <span className="text-sm font-medium text-primary uppercase tracking-wider">The DeSuite Solution</span>
             </div>
             <div className="space-y-6">
               {solutions.map((solution, index) => (
