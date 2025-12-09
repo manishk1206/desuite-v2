@@ -49,7 +49,7 @@ export function HeroSection({}: HeroSectionProps) {
           data-testid="text-hero-subtitle"
         >
           Bridge your enterprise Oracle systems with Web3 infrastructure. 
-          Enable seamless stablecoin payments, asset tokenization, and blockchain 
+          Enable seamless stablecoin payments, asset tokenization, and public blockchain 
           integration without disrupting existing workflows.
         </motion.p>
 
