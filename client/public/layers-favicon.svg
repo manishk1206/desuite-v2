@@ -1,6 +1,6 @@
 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Solid Purple Background (Cube Shape) - Retained color and rx="12" -->
-  <rect width="64" height="64" rx="12" fill="#7C3AED"/>
+  <!-- Solid Brighter Purple Background (Cube Shape) - Updated to a lighter, more vibrant purple (#8B5CF6) -->
+  <rect width="64" height="64" rx="12" fill="#8B5CF6"/>
   
   <!-- Icon: Cube Style (Centered, scaled from 24x24 to fit inside 64x64) -->
   <g transform="translate(8, 8) scale(2.0)"> 
