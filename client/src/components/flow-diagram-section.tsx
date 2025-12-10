@@ -55,7 +55,7 @@ const flowNodes: FlowNode[] = [
     icon: Globe,
     color: "from-chart-2 to-emerald-500",
     details: {
-      title: "Supported Public Blockchains",
+      title: "Public Blockchains",
       items: [
         "Ethereum",
         "Polygon",
@@ -77,7 +77,7 @@ export function FlowDiagramSection() {
   const [activeNode, setActiveNode] = useState<string | null>(null);
 
   return (
-    <section id="how-it-works" className="py-20 lg:py-32 bg-accent/30 relative">
+    <section id="how-it-works" className="py-20 lg:py-32 bg-accent/30 relative overflow-hidden">
       <div className="absolute inset-0 gradient-mesh opacity-50" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -110,7 +110,7 @@ export function FlowDiagramSection() {
                   onMouseLeave={() => setActiveNode(null)}
                 >
                   <Card
-                    // Card width remains w-64 for md screens and above
+                    // Reverted card width to the size used previously
                     className={`relative p-6 max-w-xs w-full md:w-64 cursor-pointer transition-all duration-300 hover:shadow-xl ${
                       activeNode === node.id ? "ring-2 ring-primary shadow-xl" : ""
                     }`}
@@ -122,14 +122,14 @@ export function FlowDiagramSection() {
                     <h3 className="font-display font-semibold text-lg mb-1">{node.title}</h3>
                     <p className="text-sm text-muted-foreground">{node.subtitle}</p>
                     
-                    {/* Tooltip: Should now drop vertically (top-full), be centered (-translate-x-1/2), and match card width (w-full) */}
+                    {/* Reverted Tooltip positioning to the original state with fixed width and original positioning */}
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: activeNode === node.id ? 1 : 0, y: activeNode === node.id ? 0 : 10 }}
-                      // Positioning classes to ensure it drops vertically below the card and is centered
+                      // Original positioning and sizing that caused clipping and misalignment issues
                       className="absolute left-1/2 top-full mt-4 z-20 
-                                 w-full p-4 bg-card border border-border rounded-lg shadow-lg 
-                                 -translate-x-1/2" // Ensures horizontal centering over the card
+                                 w-[200px] sm:w-[250px] p-4 bg-card border border-border rounded-lg shadow-lg 
+                                 -translate-x-1/2" 
                     >
                         <h4 className="font-medium text-sm mb-2">{node.details.title}</h4>
                         <ul className="space-y-1">
