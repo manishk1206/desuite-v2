@@ -6,7 +6,7 @@ const features = [
   {
     icon: Coins,
     title: "Stablecoin Integration",
-    description: "Process payments in USDC, USDT, and other major stablecoins directly from your ERP workflows with automatic reconciliation.",
+    description: "Process payments in USDC, USDT, XSGD and other major stablecoins directly from your ERP workflows with automatic reconciliation.",
   },
   {
     icon: Layers,
@@ -26,12 +26,12 @@ const features = [
   {
     icon: Globe2,
     title: "Multi-chain Support",
-    description: "Deploy across Ethereum, Polygon, Avalanche, and enterprise private chains. One integration, multiple networks.",
+    description: "Deploy across Ethereum, Polygon, Base and Multi-chain. One integration, multiple networks.",
   },
   {
     icon: Code2,
     title: "API-First Design",
-    description: "RESTful APIs and webhooks for seamless integration. Comprehensive SDKs for popular programming languages.",
+    description: "RESTful APIs and webhooks for seamless integration. Plug-and-play architecture with built-in security",
   },
 ];
 

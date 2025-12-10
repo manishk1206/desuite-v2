@@ -3,7 +3,8 @@ import { Shield, Zap, Scale, Lock, CheckCircle2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const capabilities = [
-  { icon: Shield, label: "SOC 2 Type II Compliant" },
+ // { icon: Shield, label: "SOC 2 Type II Compliant" },
+ { icon: Shield, label: "Built as per ISO 27001 framework for Security" },
   { icon: Zap, label: "Sub-second Latency" },
   { icon: Scale, label: "10K+ TPS Capacity" },
   { icon: Lock, label: "End-to-end Encryption" },
@@ -75,7 +76,7 @@ export function TechArchitectureSection() {
               </div>
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                <span className="text-sm text-muted-foreground">GDPR, CCPA, and SOX compliance ready</span>
+                <span className="text-sm text-muted-foreground">Data privacy in alignment with GDPR principles</span>
               </div>
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />

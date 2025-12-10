@@ -2,11 +2,11 @@ import { motion } from "framer-motion";
 
 const partners = [
   { name: "Oracle", logo: "O" },
-  { name: "Ethereum", logo: "E" },
-  { name: "Polygon", logo: "P" },
   { name: "Circle", logo: "C" },
   { name: "Chainlink", logo: "L" },
-  { name: "Avalanche", logo: "A" },
+  { name: "StraitsX", logo: "S" }, 
+  { name: "Polygon", logo: "P" }, 
+  { name: "Ethereum Foundation", logo: "E" },
 ];
 
 export function PartnersSection() {
