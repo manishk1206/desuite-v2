@@ -2,9 +2,9 @@
   <!-- Solid Brighter Purple Background (Cube Shape) - Updated to a lighter, more vibrant purple (#8B5CF6) -->
   <rect width="64" height="64" rx="12" fill="#8B5CF6"/>
   
-  <!-- Icon: Cube Style (Centered, scaled from 24x24 to fit inside 64x64) -->
-  <g transform="translate(8, 8) scale(2.0)"> 
-    <!-- The icon is now scaled up to take up more space. -->
+  <!-- Icon: Cube Style (Centered, scaled to 2.8 for maximum size with uniform 4px margin) -->
+  <g transform="translate(-1.6, -1.6) scale(2.8)"> 
+    <!-- The icon is now scaled up to take up the maximum possible space. -->
     
     <!-- Top layer (Filled plane) -->
     <polygon 
