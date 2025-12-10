@@ -97,7 +97,7 @@ export function FlowDiagramSection() {
         </motion.div>
 
         <div className="relative">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-center space-y-8 md:space-y-0 md:space-x-4 lg:space-x-8">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
             {flowNodes.map((node, index) => (
               <div key={node.id} className="flex flex-col md:flex-row items-center">
                 <motion.div
@@ -110,8 +110,7 @@ export function FlowDiagramSection() {
                   onMouseLeave={() => setActiveNode(null)}
                 >
                   <Card
-                    // Reverted card width to the size used previously
-                    className={`relative p-6 max-w-xs w-full md:w-64 cursor-pointer transition-all duration-300 hover:shadow-xl ${
+                    className={`relative p-6 w-64 cursor-pointer transition-all duration-300 hover:shadow-xl ${
                       activeNode === node.id ? "ring-2 ring-primary shadow-xl" : ""
                     }`}
                     data-testid={`card-flow-${node.id}`}
@@ -122,32 +121,29 @@ export function FlowDiagramSection() {
                     <h3 className="font-display font-semibold text-lg mb-1">{node.title}</h3>
                     <p className="text-sm text-muted-foreground">{node.subtitle}</p>
                     
-                    {/* Reverted Tooltip positioning to the original state with fixed width and original positioning */}
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: activeNode === node.id ? 1 : 0, y: activeNode === node.id ? 0 : 10 }}
-                      // Original positioning and sizing that caused clipping and misalignment issues
-                      className="absolute left-1/2 top-full mt-4 z-20 
-                                 w-[200px] sm:w-[250px] p-4 bg-card border border-border rounded-lg shadow-lg 
-                                 -translate-x-1/2" 
+                      className="absolute left-0 right-0 top-full mt-4 z-20"
                     >
-                        <h4 className="font-medium text-sm mb-2">{node.details.title}</h4>
-                        <ul className="space-y-1">
+                      <Card className="p-4 shadow-lg border-primary/20">
+                        <h4 className="font-medium text-sm mb-3">{node.details.title}</h4>
+                        <ul className="space-y-2">
                           {node.details.items.map((item, i) => (
-                            <li key={i} className="flex items-start gap-1 text-xs text-muted-foreground">
-                              <div className="w-1.5 h-1.5 mt-1 rounded-full bg-primary flex-shrink-0" />
-                              <span className="leading-tight">{item}</span>
+                            <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                              {item}
                             </li>
                           ))}
                         </ul>
+                      </Card>
                     </motion.div>
                   </Card>
                 </motion.div>
 
-                {/* HORIZONTAL ARROW (Tablet/Desktop) */}
                 {index < flowNodes.length - 1 && (
-                  <div className="hidden md:flex items-center">
-                    <svg width="50" height="40" className="overflow-visible">
+                  <div className="hidden md:flex items-center mx-4">
+                    <svg width="80" height="40" className="overflow-visible">
                       <defs>
                         <linearGradient id={`gradient-${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
                           <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.5" />
@@ -155,7 +151,7 @@ export function FlowDiagramSection() {
                         </linearGradient>
                       </defs>
                       <path
-                        d="M 0 20 L 30 20"
+                        d="M 0 20 L 60 20"
                         fill="none"
                         stroke={`url(#gradient-${index})`}
                         strokeWidth="2"
@@ -163,7 +159,7 @@ export function FlowDiagramSection() {
                         className="animate-flow"
                       />
                       <polygon
-                        points="30,15 45,20 30,25"
+                        points="60,15 75,20 60,25"
                         fill="hsl(var(--primary))"
                         opacity="0.7"
                       />
@@ -171,9 +167,8 @@ export function FlowDiagramSection() {
                   </div>
                 )}
 
-                {/* VERTICAL ARROW (Mobile) */}
                 {index < flowNodes.length - 1 && (
-                  <div className="flex md:hidden items-center">
+                  <div className="flex md:hidden items-center my-4">
                     <motion.div
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
