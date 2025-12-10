@@ -1,13 +1,35 @@
 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Solid Purple Background (mimicking the DeSuite icon container) -->
-  <!-- Using a deep purple color for strong contrast. -->
+  <!-- Solid Purple Background (Cube Shape) - Retained color and rx="12" -->
   <rect width="64" height="64" rx="12" fill="#7C3AED"/>
   
-  <!-- Icon: Stacked Layers (White) -->
-  <g transform="translate(16, 16)">
-    <!-- The stacked layer paths are now white for high contrast against the purple background -->
-    <path d="M16 32L0 24L16 16L32 24L16 32Z" fill="#FFFFFF" opacity="0.6"/>
-    <path d="M16 24L0 16L16 8L32 16L16 24Z" fill="#FFFFFF" opacity="0.8"/>
-    <path d="M16 16L0 8L16 0L32 8L16 16Z" fill="#FFFFFF"/>
+  <!-- Icon: Cube Style (Centered, scaled from 24x24 to fit inside 64x64) -->
+  <g transform="translate(20, 18) scale(1.1)"> 
+    <!-- The icon is now roughly 24x24 scaled up slightly and offset to center it. -->
+    
+    <!-- Top layer (Filled plane) -->
+    <polygon 
+      points="12 2 2 7 12 12 22 7 12 2" 
+      fill="#60A5FA" fill-opacity="0.9"
+    />
+    
+    <!-- Middle layer lines -->
+    <polyline 
+      points="2 12 12 17 22 12" 
+      stroke="#FFFFFF" 
+      stroke-width="1.2" 
+      stroke-linecap="round" 
+      stroke-linejoin="round"
+      opacity="0.8"
+    />
+    
+    <!-- Bottom layer lines -->
+    <polyline 
+      points="2 17 12 22 22 17" 
+      stroke="#FFFFFF" 
+      stroke-width="1.2" 
+      stroke-linecap="round" 
+      stroke-linejoin="round"
+      opacity="0.6"
+    />
   </g>
 </svg>
