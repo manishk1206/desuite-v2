@@ -77,7 +77,7 @@ export function FlowDiagramSection() {
   const [activeNode, setActiveNode] = useState<string | null>(null);
 
   return (
-    <section id="how-it-works" className="py-20 lg:py-32 bg-accent/30 relative overflow-hidden">
+    <section id="how-it-works" className="py-20 lg:py-32 bg-accent/30 relative">
       <div className="absolute inset-0 gradient-mesh opacity-50" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -110,7 +110,7 @@ export function FlowDiagramSection() {
                   onMouseLeave={() => setActiveNode(null)}
                 >
                   <Card
-                    // Restored card width to w-64 for md screens
+                    // Card width remains w-64 for md screens and above
                     className={`relative p-6 max-w-xs w-full md:w-64 cursor-pointer transition-all duration-300 hover:shadow-xl ${
                       activeNode === node.id ? "ring-2 ring-primary shadow-xl" : ""
                     }`}
@@ -122,7 +122,7 @@ export function FlowDiagramSection() {
                     <h3 className="font-display font-semibold text-lg mb-1">{node.title}</h3>
                     <p className="text-sm text-muted-foreground">{node.subtitle}</p>
                     
-                    {/* FIXED TOOLTIP POSITIONING: Set left-1/2, top-full, and ensured full width of the card */}
+                    {/* Tooltip: Should now drop vertically (top-full), be centered (-translate-x-1/2), and match card width (w-full) */}
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: activeNode === node.id ? 1 : 0, y: activeNode === node.id ? 0 : 10 }}
