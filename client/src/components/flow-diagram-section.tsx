@@ -97,7 +97,6 @@ export function FlowDiagramSection() {
         </motion.div>
 
         <div className="relative">
-          {/* FLOW CONTAINER: Changed from fixed gap to space-x-4 (smaller gap) */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-center space-y-8 md:space-y-0 md:space-x-4 lg:space-x-8">
             {flowNodes.map((node, index) => (
               <div key={node.id} className="flex flex-col md:flex-row items-center">
@@ -111,7 +110,6 @@ export function FlowDiagramSection() {
                   onMouseLeave={() => setActiveNode(null)}
                 >
                   <Card
-                    // Reduced card width slightly for better tablet fit
                     className={`relative p-6 max-w-xs w-full md:w-60 cursor-pointer transition-all duration-300 hover:shadow-xl ${
                       activeNode === node.id ? "ring-2 ring-primary shadow-xl" : ""
                     }`}
@@ -123,13 +121,16 @@ export function FlowDiagramSection() {
                     <h3 className="font-display font-semibold text-lg mb-1">{node.title}</h3>
                     <p className="text-sm text-muted-foreground">{node.subtitle}</p>
                     
+                    {/* FIXED TOOLTIP POSITIONING */}
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
-                      // Fixed positioning for the tooltip to prevent layout shifts during hover
                       animate={{ opacity: activeNode === node.id ? 1 : 0, y: activeNode === node.id ? 0 : 10 }}
-                      className="absolute z-20 w-[200px] sm:w-[250px] p-2 bg-card border border-border rounded-lg shadow-lg -translate-x-1/2 left-1/2 md:mt-4 md:left-full md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 md:p-4"
+                      // Positioning classes reverted to fall below the card and be centered horizontally
+                      className="absolute left-1/2 top-full mt-4 z-20 
+                                 w-[200px] sm:w-[250px] p-4 bg-card border border-border rounded-lg shadow-lg 
+                                 -translate-x-1/2" // Ensures horizontal centering
                     >
-                      <h4 className="font-medium text-sm mb-2">{node.details.title}</h4>
+                        <h4 className="font-medium text-sm mb-2">{node.details.title}</h4>
                         <ul className="space-y-1">
                           {node.details.items.map((item, i) => (
                             <li key={i} className="flex items-start gap-1 text-xs text-muted-foreground">
@@ -145,7 +146,6 @@ export function FlowDiagramSection() {
                 {/* HORIZONTAL ARROW (Tablet/Desktop) */}
                 {index < flowNodes.length - 1 && (
                   <div className="hidden md:flex items-center">
-                    {/* Reduced SVG width from 80 to 50 for tighter fit */}
                     <svg width="50" height="40" className="overflow-visible">
                       <defs>
                         <linearGradient id={`gradient-${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
@@ -154,7 +154,6 @@ export function FlowDiagramSection() {
                         </linearGradient>
                       </defs>
                       <path
-                        // Adjusted path to match new width (from 60 to 30)
                         d="M 0 20 L 30 20"
                         fill="none"
                         stroke={`url(#gradient-${index})`}
@@ -163,7 +162,6 @@ export function FlowDiagramSection() {
                         className="animate-flow"
                       />
                       <polygon
-                        // Adjusted polygon points for arrowhead (from 60,15 75,20 60,25 to 30,15 45,20 30,25)
                         points="30,15 45,20 30,25"
                         fill="hsl(var(--primary))"
                         opacity="0.7"
