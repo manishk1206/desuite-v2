@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useCallback, useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react"; // Added for loading spinner
+import { Loader2, Layers } from "lucide-react"; // Added for loading spinner and Layers favicon
 
 // Formspree ID from NewsletterSubscription.tsx Canvas
 const FORM_ID = "mblnzyjl"; 
@@ -88,9 +88,10 @@ export function Footer() {
             className="col-span-2 md:col-span-1"
           >
             <a href="#" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-display font-bold text-lg">D</span>
-              </div>
+               {/* LOGO UPDATE: Replaced the 'D' text span with the Layers icon */}
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+              <Layers className="w-4 h-4 text-primary-foreground" />
+            </div>
               <span className="font-display font-semibold text-xl">DeSuite</span>
             </a>
             <p className="text-sm text-muted-foreground mb-6">

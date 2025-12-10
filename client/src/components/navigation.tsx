@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./theme-toggle";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Layers } from "lucide-react"; // Layers imported here
 import { motion, AnimatePresence } from "framer-motion";
 
 interface NavigationProps {}
@@ -40,8 +40,9 @@ export function Navigation({}: NavigationProps) {
             className="flex items-center gap-2"
             data-testid="link-logo"
           >
+            {/* LOGO UPDATE: Replaced the 'D' text span with the Layers icon */}
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-display font-bold text-lg">D</span>
+              <Layers className="w-4 h-4 text-primary-foreground" />
             </div>
             <span className="font-display font-semibold text-xl">DeSuite</span>
           </a>
