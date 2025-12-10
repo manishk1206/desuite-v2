@@ -19,7 +19,7 @@ const flowNodes: FlowNode[] = [
   {
     id: "oracle",
     title: "Oracle ERP",
-    subtitle: "Integration(OIC)",
+    subtitle: "Oracle Integration(OIC)",
     icon: Database,
     color: "from-red-500 to-orange-500",
     details: {
@@ -42,9 +42,9 @@ const flowNodes: FlowNode[] = [
       title: "Core Capabilities",
       items: [
         "Stablecoin processing",
+        "Asset tokenization",
         "Smart contract Automation",
         "Compliance verification",
-        "Asset tokenization(Coming Soon)",
       ],
     },
   },
