@@ -19,7 +19,6 @@ export function Navigation({}: NavigationProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Use a higher scroll threshold (e.g., 50px) if you want the header to change color later
       setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
@@ -41,15 +40,10 @@ export function Navigation({}: NavigationProps) {
             className="flex items-center gap-2"
             data-testid="link-logo"
           >
-            {/* UPDATED LOGO: Gradient Styling applied directly to Layers icon */}
-            <Layers 
-              className="w-6 h-6 
-                         bg-clip-text 
-                         text-transparent 
-                         bg-gradient-to-r 
-                         from-cyan-400 
-                         to-primary" 
-            />
+            {/* LOGO UPDATE: Replaced the 'D' text span with the Layers icon */}
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+              <Layers className="w-4 h-4 text-primary-foreground" />
+            </div>
             <span className="font-display font-semibold text-xl">DeSuite</span>
           </a>
 
