@@ -41,10 +41,10 @@ const flowNodes: FlowNode[] = [
     details: {
       title: "Core Capabilities",
       items: [
-        "Stablecoin processing",
-        "Asset tokenization",
-        "Smart contract Automation",
-        "Compliance verification",
+        "Stablecoin Processing",
+        "Asset Tokenization",
+        "Smart Contract Automation",
+        "Compliance Verification",
       ],
     },
   },
