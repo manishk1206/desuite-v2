@@ -1,18 +1,24 @@
-<svg 
-  xmlns="http://www.w3.org/2000/svg" 
-  width="256" 
-  height="256" 
-  viewBox="0 0 24 24" 
-  fill="none" 
-  stroke="#1E40AF" 
-  stroke-width="1.5" 
-  stroke-linecap="round" 
-  stroke-linejoin="round"
->
-  <!-- Main layer (top) -->
-  <polygon points="12 2 2 7 12 12 22 7 12 2" fill="#3B82F6"/>
-  <!-- Middle layer lines -->
-  <polyline points="2 12 12 17 22 12" stroke="#1E40AF"/>
-  <!-- Bottom layer lines -->
-  <polyline points="2 17 12 22 22 17" stroke="#1E40AF"/>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- White Background Circle for high contrast against dark toolbars -->
+  <circle cx="32" cy="32" r="32" fill="#FFFFFF"/>
+  
+  <!-- Icon: Stacked Layers (using primary app colors) -->
+  <g transform="translate(16, 16)">
+    <defs>
+      <!-- Gradient reflecting the DeSuite Layer color scheme (blue/purple) -->
+      <linearGradient id="gradient-layer" x1="16" y1="0" x2="16" y2="32" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#6366F1"/>
+        <stop offset="1" stopColor="#8B5CF6"/>
+      </linearGradient>
+    </defs>
+    
+    <!-- Bottom Layer -->
+    <path d="M16 32L0 24L16 16L32 24L16 32Z" fill="url(#gradient-layer)" opacity="0.6"/>
+    
+    <!-- Middle Layer -->
+    <path d="M16 24L0 16L16 8L32 16L16 24Z" fill="url(#gradient-layer)" opacity="0.8"/>
+    
+    <!-- Top Layer -->
+    <path d="M16 16L0 8L16 0L32 8L16 16Z" fill="url(#gradient-layer)"/>
+  </g>
 </svg>
