@@ -1,8 +1,12 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { Loader2 } from "lucide-react"; // Added for loading spinner
+
+// Formspree ID from NewsletterSubscription.tsx Canvas
+const FORM_ID = "mblnzyjl"; 
 
 const productLinks = [
   { label: "Features", href: "#features" },
@@ -25,19 +29,52 @@ const legalLinks = [
 ];
 
 export function Footer() {
+  // State for newsletter form
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      toast({
-        title: "Subscribed!",
-        description: "You'll receive updates on DeSuite news and releases.",
+    if (!email) return;
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`https://formspree.io/f/${FORM_ID}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ email }),
       });
-      setEmail("");
+
+      if (response.ok) {
+        toast({
+          title: "Subscribed!",
+          description: "Your email has been stored. Welcome to DeSuite!",
+          variant: "default", 
+        });
+        setEmail(""); // Clear the input
+      } else {
+        const data = await response.json();
+        // Fallback for Formspree errors
+        throw new Error(data.error || "Submission failed");
+      }
+    } catch (error) {
+      console.error("Subscription Error:", error);
+      toast({
+        title: "Subscription Failed",
+        description: "Please check your connection or Formspree setup.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, [email, toast]);
+
+  // The rest of the component remains the same, but the form now uses the updated logic
 
   return (
     <footer className="bg-card border-t border-border">
@@ -163,9 +200,14 @@ export function Footer() {
                 className="flex-1"
                 data-testid="input-newsletter-email"
                 aria-label="Email for newsletter"
+                disabled={isLoading}
               />
-              <Button type="submit" data-testid="button-newsletter-subscribe">
-                Subscribe
+              <Button type="submit" data-testid="button-newsletter-subscribe" disabled={isLoading}>
+                {isLoading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  "Subscribe"
+                )}
               </Button>
             </form>
           </motion.div>
