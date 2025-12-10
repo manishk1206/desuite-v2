@@ -110,7 +110,8 @@ export function FlowDiagramSection() {
                   onMouseLeave={() => setActiveNode(null)}
                 >
                   <Card
-                    className={`relative p-6 max-w-xs w-full md:w-60 cursor-pointer transition-all duration-300 hover:shadow-xl ${
+                    // Restored card width to w-64 for md screens
+                    className={`relative p-6 max-w-xs w-full md:w-64 cursor-pointer transition-all duration-300 hover:shadow-xl ${
                       activeNode === node.id ? "ring-2 ring-primary shadow-xl" : ""
                     }`}
                     data-testid={`card-flow-${node.id}`}
@@ -121,14 +122,14 @@ export function FlowDiagramSection() {
                     <h3 className="font-display font-semibold text-lg mb-1">{node.title}</h3>
                     <p className="text-sm text-muted-foreground">{node.subtitle}</p>
                     
-                    {/* FIXED TOOLTIP POSITIONING */}
+                    {/* FIXED TOOLTIP POSITIONING: Set left-1/2, top-full, and ensured full width of the card */}
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: activeNode === node.id ? 1 : 0, y: activeNode === node.id ? 0 : 10 }}
-                      // Positioning classes reverted to fall below the card and be centered horizontally
+                      // Positioning classes to ensure it drops vertically below the card and is centered
                       className="absolute left-1/2 top-full mt-4 z-20 
-                                 w-[200px] sm:w-[250px] p-4 bg-card border border-border rounded-lg shadow-lg 
-                                 -translate-x-1/2" // Ensures horizontal centering
+                                 w-full p-4 bg-card border border-border rounded-lg shadow-lg 
+                                 -translate-x-1/2" // Ensures horizontal centering over the card
                     >
                         <h4 className="font-medium text-sm mb-2">{node.details.title}</h4>
                         <ul className="space-y-1">
