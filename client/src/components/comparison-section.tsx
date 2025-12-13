@@ -1,7 +1,7 @@
-import React, { useState } from 'react'; // ADDED: Required for using React hooks (useState)
+import React, { useState } from 'react'; 
 import {
   CheckCircle,
-  XCircle,
+  XCircle, // Keeping XCircle in imports just in case, but using MinusCircle below
   Zap,
   Shield,
   Globe,
@@ -13,8 +13,9 @@ import {
   Fingerprint, 
   Cpu, 
   ChevronDown, 
+  MinusCircle, // ADDED: New icon for representing limitations
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion"; // ADDED: AnimatePresence for smooth exit animations
+import { motion, AnimatePresence } from "framer-motion";
 
 // Defines the data structure for the comparison points.
 const comparisonData = [
@@ -72,7 +73,7 @@ const itemVariants = {
 
 // Component for a single interactive comparison row
 const ComparisonRow = ({ item, index }) => {
-  const [isOpen, setIsOpen] = useState(false); // FIXED: Using imported useState hook
+  const [isOpen, setIsOpen] = useState(false);
 
   // Determine the border color for the row based on whether it's open
   const rowClasses = `grid grid-cols-[1fr_1.5fr_1.5fr_1fr] group transition-colors duration-200 
@@ -98,15 +99,18 @@ const ComparisonRow = ({ item, index }) => {
         <div className="p-4 border-l text-sm hidden lg:block">
           <div className="flex items-start text-primary font-medium">
             <CheckCircle className="w-4 h-4 mr-2 mt-1 flex-shrink-0" />
-            <p className="text-foreground/80 line-clamp-2">{item.desuite}</p>
+            {/* REMOVED: line-clamp-2 to show full sentence */}
+            <p className="text-foreground/80">{item.desuite}</p> 
           </div>
         </div>
 
         {/* 3. Permissioned DLT Content (Visible only on Desktop or when Open on Mobile) */}
         <div className="p-4 border-l text-sm hidden lg:block">
           <div className="flex items-start text-muted-foreground font-medium">
-            <XCircle className="w-4 h-4 mr-2 mt-1 flex-shrink-0" />
-            <p className="text-foreground/80 line-clamp-2">{item.permissioned}</p>
+            {/* CHANGED: XCircle to MinusCircle */}
+            <MinusCircle className="w-4 h-4 mr-2 mt-1 flex-shrink-0" /> 
+            {/* REMOVED: line-clamp-2 to show full sentence */}
+            <p className="text-foreground/80">{item.permissioned}</p>
           </div>
         </div>
 
@@ -141,7 +145,8 @@ const ComparisonRow = ({ item, index }) => {
                 {/* Permissioned Content for Mobile */}
                 <div>
                     <h4 className="flex items-center text-muted-foreground font-bold mb-1">
-                        <XCircle className="w-4 h-4 mr-2" /> Permissioned DLT Context
+                        {/* CHANGED: XCircle to MinusCircle */}
+                        <MinusCircle className="w-4 h-4 mr-2" /> Permissioned DLT Context
                     </h4>
                     <p className="text-foreground/80 text-sm pl-6">{item.permissioned}</p>
                 </div>
