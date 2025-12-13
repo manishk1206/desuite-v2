@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Database, Layers, Globe, ArrowRight, Server, Coins, FileCheck, Link2 } from "lucide-react";
+import { Database, Layers, Globe, ArrowRight, Server, Coins, FileCheck, Link2, CircleDollarSign, ShieldCheck, Cable, Layers2, Layers3 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 interface FlowNode {
@@ -36,7 +36,7 @@ const flowNodes: FlowNode[] = [
     id: "desuite",
     title: "DeSuite Layer",
     subtitle: "DeSuite Orchestrator(DSO)™",
-    icon: Layers,
+    icon: Layers3,
     color: "from-primary to-chart-4",
     details: {
       title: "Core Capabilities",
@@ -68,9 +68,9 @@ const flowNodes: FlowNode[] = [
 
 const subComponents = [
   { icon: Server, label: "API Gateway" },
-  { icon: Coins, label: "Token Engine" },
-  { icon: FileCheck, label: "Compliance" },
-  { icon: Link2, label: "Connectors" },
+  { icon: CircleDollarSign, label: "Token Engine" },
+  { icon: ShieldCheck, label: "Compliance" },
+  { icon: Cable, label: "Connectors" },
 ];
 
 export function FlowDiagramSection() {

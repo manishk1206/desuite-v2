@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
-import { Coins, Layers, Database, Shield, Globe2, Code2, DollarSign, NetworkIcon } from "lucide-react";
+import { Coins, Layers, Database, Shield, Globe2, Code2, DollarSign, NetworkIcon, KeyRound, Atom, CircleDollarSign } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const features = [
   {
-    icon: DollarSign,
+    icon: CircleDollarSign,
     title: "Stablecoin Integration",
     description: "Process payments in USDC, USDT, XSGD and other major stablecoins directly from your ERP workflows with automatic reconciliation.",
   },
@@ -14,12 +14,12 @@ const features = [
     description: "Convert enterprise assets into blockchain tokens instantly. Inventory, receivables, and real estate - all tokenizable.",
   },
   {
-    icon: NetworkIcon,
+    icon: Atom,
     title: "Multi-chain Support",
     description: "Deploy across Ethereum, Polygon and other major L1 and L2 chains. One integration, multiple networks.",
   },
    {
-    icon: Shield,
+    icon: KeyRound,
     title: "Enterprise Data Privacy",
     description: "Zero-Knowledge Solution: Data stays off-chain in the Oracle ERP. DeSuite only publishes verifiable, anonymous zk-Proofs on the public ledger.",
   },
