@@ -31,7 +31,7 @@ const features = [
   {
     icon: Database,
     title: "Oracle Native",
-    description: "Purpose-built for Oracle ERP using a plug-and-play architecture. No middleware complexity or custom development required.",
+    description: "Purpose-built for Oracle ERP. No middleware complexity or custom development required.",
   },
   
 ];

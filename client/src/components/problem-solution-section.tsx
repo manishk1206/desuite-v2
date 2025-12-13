@@ -16,7 +16,7 @@ const problems = [
   {
     icon: Workflow,
     title: "Operational Friction",
-    description: "Manual processes for stablecoin payments and asset tokenization slow down business operations",
+    description: "Manual processes for stablecoin processing and asset tokenization slow down business operations",
   },
 ];
 
@@ -24,17 +24,17 @@ const solutions = [
   {
     icon: Zap,
     title: "Unified Layer",
-    description: "Single integration point connecting Oracle ERP to any blockchain network seamlessly",
+    description: "Single integration point connecting Oracle ERP to any blockchain network seamlessly using a plug-and-play architecture",
   },
   {
     icon: ShieldCheck,
     title: "Enterprise Ready",
-    description: "Production-grade infrastructure with compliance, security and audit trails built-in from experts in the field",
+    description: "Production-grade infrastructure with compliance, security and jurisidiction aware audit trails built-in by experts",
   },
   {
     icon: RefreshCw,
     title: "Automated Workflows",
-    description: "Real-time synchronization between ERP transactions and blockchain operations",
+    description: "Real-time synchronization between ERP operations and blockchain transactions, increrasing overall business process efficiency",
   },
 ];
 
