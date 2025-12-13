@@ -34,8 +34,8 @@ export function HeroSection({}: HeroSectionProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          // --- UPDATED: Increased max font size to xl:text-7xl for captivating look ---
-          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-6"
+          // --- UPDATED: Adjusted lg:size down to 5xl for better fit on laptops, kept xl:text-7xl for monitors. ---
+          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-7xl font-bold tracking-tight mb-6"
           data-testid="text-hero-title"
         >
           <span className="gradient-text">Stablecoin & Tokenization</span>
@@ -47,8 +47,8 @@ export function HeroSection({}: HeroSectionProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          // --- UPDATED: Increased max font size to lg:text-2xl ---
-          className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10"
+          // --- UPDATED: Adjusted lg:size down to xl for better readability on laptops. ---
+          className="text-lg sm:text-xl lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
           data-testid="text-hero-subtitle"
         >
           Bridge your enterprise Oracle systems with Web3 infrastructure. 

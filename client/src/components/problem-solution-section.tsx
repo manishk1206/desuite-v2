@@ -66,7 +66,7 @@ export function ProblemSolutionSection() {
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4" data-testid="text-problem-solution-title">
             The Enterprise Web3 Challenge
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-screen-2xl mx-auto">
             Organizations struggle to bridge the gap between traditional ERP systems and emerging blockchain technology.
           </p>
         </motion.div>

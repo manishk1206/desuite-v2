@@ -91,7 +91,7 @@ export function FlowDiagramSection() {
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4" data-testid="text-flow-title">
             How DeSuite Works
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-screen-2xl mx-auto">
             A seamless bridge connecting your Oracle ERP to the world of blockchain and digital assets.
           </p>
         </motion.div>

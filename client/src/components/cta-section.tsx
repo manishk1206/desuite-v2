@@ -13,7 +13,7 @@ export function CTASection({}: CTASectionProps) { // <-- Removed onBookDemo argu
       <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-primary/15 rounded-full blur-3xl" />
       <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-chart-4/15 rounded-full blur-3xl" />
 
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -28,7 +28,7 @@ export function CTASection({}: CTASectionProps) { // <-- Removed onBookDemo argu
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold mb-6" data-testid="text-cta-title">
             Ready to Modernize Your ERP?
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
+          <p className="text-lg text-muted-foreground max-w-screen-2xl mx-auto mb-10">
             Schedule a personalized walkthrough with our team and discover how DeSuite 
             can transform your enterprise operations with blockchain technology.
           </p>

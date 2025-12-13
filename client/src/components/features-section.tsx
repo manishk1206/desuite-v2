@@ -65,7 +65,7 @@ export function FeaturesSection() {
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4" data-testid="text-features-title">
             Enterprise-Grade Features
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-screen-2xl mx-auto">
             Everything you need to integrate blockchain capabilities into your enterprise operations.
           </p>
         </motion.div>
