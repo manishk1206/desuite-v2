@@ -36,7 +36,7 @@ const flowNodes: FlowNode[] = [
     id: "desuite",
     title: "DeSuite Layer",
     subtitle: "DeSuite Orchestrator(DSO)™",
-    icon: Layers3,
+    icon: Layers,
     color: "from-primary to-chart-4",
     details: {
       title: "Core Capabilities",

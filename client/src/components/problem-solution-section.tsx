@@ -1,19 +1,19 @@
 import { motion } from "framer-motion";
-import { AlertTriangle, CheckCircle2, XCircle, Zap, Shield, RefreshCw } from "lucide-react";
+import { AlertTriangle, CheckCircle2, XCircle, Zap, Shield, RefreshCw, ShieldCheck, Workflow, UnplugIcon, ShieldAlert } from "lucide-react";
 
 const problems = [
   {
-    icon: XCircle,
+    icon: UnplugIcon,
     title: "Fragmented Systems",
     description: "Disconnected ERP and blockchain systems create data silos and manual reconciliation nightmares",
   },
   {
-    icon: AlertTriangle,
+    icon: ShieldAlert,
     title: "Complex Integration",
     description: "Traditional Web3 integration requires extensive development resources and specialized expertise",
   },
   {
-    icon: RefreshCw,
+    icon: Workflow,
     title: "Operational Friction",
     description: "Manual processes for stablecoin payments and asset tokenization slow down business operations",
   },
@@ -26,12 +26,12 @@ const solutions = [
     description: "Single integration point connecting Oracle ERP to any blockchain network seamlessly",
   },
   {
-    icon: Shield,
+    icon: ShieldCheck,
     title: "Enterprise Ready",
     description: "Production-grade infrastructure with compliance, security, and audit trails built-in",
   },
   {
-    icon: CheckCircle2,
+    icon: RefreshCw,
     title: "Automated Workflows",
     description: "Real-time synchronization between ERP transactions and blockchain operations",
   },
