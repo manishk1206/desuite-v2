@@ -17,7 +17,8 @@ export function HeroSection({}: HeroSectionProps) {
       {/* RESTORED: Original second glow using bg-chart-4/20 */}
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-chart-4/20 rounded-full blur-3xl animate-pulse-glow delay-1000" />
       
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* --- MODIFIED: Changed max-w-5xl to max-w-7xl (1280px) for wider main content area --- */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -33,7 +34,8 @@ export function HeroSection({}: HeroSectionProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6"
+          // --- UPDATED: Increased max font size to xl:text-7xl for captivating look ---
+          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-6"
           data-testid="text-hero-title"
         >
           <span className="gradient-text">Stablecoin & Tokenization</span>
@@ -45,7 +47,8 @@ export function HeroSection({}: HeroSectionProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
+          // --- UPDATED: Increased max font size to lg:text-2xl ---
+          className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10"
           data-testid="text-hero-subtitle"
         >
           Bridge your enterprise Oracle systems with Web3 infrastructure. 
@@ -92,7 +95,8 @@ export function HeroSection({}: HeroSectionProps) {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-16 sm:mt-20"
         >
-          <div className="relative mx-auto max-w-3xl">
+          {/* --- MODIFIED: Changed max-w-3xl to max-w-5xl (1024px) for wider card preview --- */}
+          <div className="relative mx-auto max-w-5xl">
             {/* RESTORED: Original card glow gradient (primary, chart-4, chart-2) */}
             <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-chart-4/20 to-chart-2/20 rounded-2xl blur-xl" />
             <div className="relative bg-card border border-border rounded-xl p-4 sm:p-6 shadow-xl animate-float">

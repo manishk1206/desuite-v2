@@ -80,7 +80,7 @@ export function FlowDiagramSection() {
     <section id="how-it-works" className="py-20 lg:py-32 bg-accent/30 relative overflow-hidden">
       <div className="absolute inset-0 gradient-mesh opacity-50" />
       
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
