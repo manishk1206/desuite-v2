@@ -1,7 +1,7 @@
 import { CheckCircle, XCircle, Zap, Shield, Globe, Layers, TrendingUp, Lock } from "lucide-react";
 import { motion } from "framer-motion";
 
-// Defines the data structure for the comparison points, derived from the user-provided image.
+// Defines the data structure for the comparison points.
 const comparisonData = [
   {
     icon: Globe,
@@ -45,20 +45,18 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.05,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 10 },
   visible: { opacity: 1, y: 0 },
 };
 
-
 export function ComparisonSection() {
   return (
-    // !!! CRUCIAL: This ID must match the navigation link's href="#why-desuite"
     <section id="why-desuite" className="py-24 sm:py-32 bg-background relative overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -75,65 +73,71 @@ export function ComparisonSection() {
             <span className="text-sm font-medium text-chart-4">The Essential Web3 Layer</span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-            <span className="gradient-text-chart-4">Why DeSuite is Your Strategic Choice</span>
+            <span className="gradient-text-chart-4">DeSuite vs. Traditional DLT Solutions</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            DeSuite is designed to be the essential layer that brings the efficiency and liquidity of public Web3 infrastructure to your existing Oracle ecosystem. We are complementary to existing enterprise solutions like OBP-DA.
+            Compare the foundational differences between leveraging decentralized public infrastructure (DeSuite) and utilizing a closed, permissioned DLT (such as OBP-DA).
           </p>
         </motion.div>
 
-        {/* Comparison Grid */}
+        {/* COMPARISON TABLE STRUCTURE (Responsive Grid) */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          className="space-y-6"
+          className="overflow-x-auto rounded-xl border border-border/70 shadow-2xl"
         >
-          {comparisonData.map((item, index) => (
-            <motion.div
-              key={item.feature}
-              variants={itemVariants}
-              className="bg-card border border-border rounded-xl p-4 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-300"
-            >
-              <div className="flex items-center mb-4 pb-4 border-b border-border">
-                <item.icon className="w-6 h-6 text-primary mr-3 flex-shrink-0" />
-                <h3 className="text-xl font-semibold text-foreground font-display">{item.feature}</h3>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                {/* DeSuite Column (The strength) */}
-                <div className="p-3 rounded-lg border border-green-500/30 bg-green-500/5">
-                  <div className="flex items-center text-lg font-medium text-green-400 mb-2">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0" />
-                    DeSuite Advantage
-                  </div>
-                  <p className="text-sm text-muted-foreground">{item.desuite}</p>
-                </div>
+          {/* Table Container for Responsiveness */}
+          <div className="min-w-[900px] lg:min-w-full">
+            
+            {/* Header Row */}
+            <div className="grid grid-cols-[1fr_1.5fr_1.5fr_1fr] text-left font-display font-bold text-sm uppercase tracking-wider bg-card/90 border-b border-border/70">
+                <div className="p-4 text-foreground/80">Feature</div>
+                <div className="p-4 text-green-400 border-l border-border/70">DeSuite Advantage</div>
+                <div className="p-4 text-red-400 border-l border-border/70">OBP-DA Context</div>
+                <div className="p-4 text-primary border-l border-border/70">Verdict</div>
+            </div>
 
-                {/* OBP-DA Column (The limitation/context) */}
-                <div className="p-3 rounded-lg border border-red-500/30 bg-red-500/5">
-                  <div className="flex items-center text-lg font-medium text-red-400 mb-2">
-                    <XCircle className="w-5 h-5 mr-2 flex-shrink-0" />
-                    OBP-DA Context
-                  </div>
-                  <p className="text-sm text-muted-foreground">{item.obpda}</p>
-                </div>
+            {/* Data Rows */}
+            {comparisonData.map((item, index) => (
+                <motion.div 
+                    key={item.feature}
+                    variants={itemVariants}
+                    className="grid grid-cols-[1fr_1.5fr_1.5fr_1fr] group transition-colors duration-200 hover:bg-card/50"
+                >
+                    {/* 1. Feature Name */}
+                    <div className="p-4 border-b border-border/50 flex items-center gap-3 bg-card/70">
+                        <item.icon className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="font-semibold text-foreground text-base">{item.feature}</span>
+                    </div>
 
-                {/* Winner Column (The friendly takeaway) */}
-                <div className="p-3 rounded-lg border border-primary/30 bg-primary/5">
-                  <div className="flex items-center text-lg font-medium text-primary mb-2">
-                    <Zap className="w-5 h-5 mr-2 flex-shrink-0" />
-                    Key Takeaway
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    <span className="font-semibold text-foreground">{item.winner.split(':')[0]}</span>: {item.winner.split(':').slice(1).join(':').trim()}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+                    {/* 2. DeSuite Content */}
+                    <div className="p-4 border-b border-border/50 border-l text-sm bg-green-900/10 transition-colors duration-200 group-hover:bg-green-900/20">
+                        <div className="flex items-start text-green-400 mb-1">
+                            <CheckCircle className="w-4 h-4 mr-2 mt-1 flex-shrink-0" />
+                            <p className="text-foreground/80">{item.desuite}</p>
+                        </div>
+                    </div>
+
+                    {/* 3. OBP-DA Content */}
+                    <div className="p-4 border-b border-border/50 border-l text-sm bg-red-900/10 transition-colors duration-200 group-hover:bg-red-900/20">
+                         <div className="flex items-start text-red-400 mb-1">
+                            <XCircle className="w-4 h-4 mr-2 mt-1 flex-shrink-0" />
+                            <p className="text-foreground/80">{item.obpda}</p>
+                        </div>
+                    </div>
+
+                    {/* 4. Verdict/Takeaway */}
+                    <div className="p-4 border-b border-border/50 border-l text-sm">
+                        <p className="text-muted-foreground">
+                            <Zap className="w-4 h-4 text-primary inline-block mr-1 -mt-0.5" />
+                            <span className="font-semibold text-primary">{item.winner.split(':')[0]}</span>: {item.winner.split(':').slice(1).join(':').trim()}
+                        </p>
+                    </div>
+                </motion.div>
+            ))}
+          </div>
         </motion.div>
         
         {/* Friendly Conclusion */}
