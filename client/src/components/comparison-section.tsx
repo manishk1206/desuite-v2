@@ -1,3 +1,4 @@
+import React, { useState } from 'react'; // ADDED: Required for using React hooks (useState)
 import {
   CheckCircle,
   XCircle,
@@ -11,9 +12,9 @@ import {
   DollarSign, 
   Fingerprint, 
   Cpu, 
-  ChevronDown, // New icon for toggling/interaction
+  ChevronDown, 
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion"; // ADDED: AnimatePresence for smooth exit animations
 
 // Defines the data structure for the comparison points.
 const comparisonData = [
@@ -71,7 +72,7 @@ const itemVariants = {
 
 // Component for a single interactive comparison row
 const ComparisonRow = ({ item, index }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false); // FIXED: Using imported useState hook
 
   // Determine the border color for the row based on whether it's open
   const rowClasses = `grid grid-cols-[1fr_1.5fr_1.5fr_1fr] group transition-colors duration-200 
@@ -202,7 +203,6 @@ export function ComparisonSection() {
             {/* Header Row - Cleaned up colors */}
             <div className="grid grid-cols-[1fr_1.5fr_1.5fr_1fr] text-left font-display font-bold text-sm uppercase tracking-wider bg-card border-b border-border/70">
                 <div className="p-4 text-foreground/80">Feature</div>
-                {/* Removed green/red color from header text */}
                 <div className="p-4 text-foreground border-l border-border/70 hidden lg:block">DeSuite Advantage</div>
                 <div className="p-4 text-foreground/70 border-l border-border/70 hidden lg:block">Permissioned DLT Context</div>
                 <div className="p-4 text-primary border-l border-border/70 hidden lg:block">Verdict</div>
