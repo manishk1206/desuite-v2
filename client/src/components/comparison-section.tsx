@@ -7,10 +7,11 @@ import {
   Layers,
   TrendingUp,
   Lock,
-  Network, // New Icon: Network for Interoperability
-  DollarSign, // New Icon: DollarSign for Cost Basis
-  Fingerprint, // New Icon: Fingerprint for Data Privacy
-  Cpu, // New Icon: Cpu for Liquidity
+  Network, 
+  DollarSign, 
+  Fingerprint, 
+  Cpu, 
+  ChevronDown, // New icon for toggling/interaction
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -68,6 +69,100 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
+// Component for a single interactive comparison row
+const ComparisonRow = ({ item, index }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  // Determine the border color for the row based on whether it's open
+  const rowClasses = `grid grid-cols-[1fr_1.5fr_1.5fr_1fr] group transition-colors duration-200 
+    hover:bg-card/50 ${index % 2 === 0 ? 'bg-card/30' : 'bg-card/70'} 
+    ${isOpen ? 'ring-2 ring-primary/50' : ''}`;
+
+  return (
+    <motion.div
+      variants={itemVariants}
+      className="border-b border-border/50 last:border-b-0 cursor-pointer"
+      onClick={() => setIsOpen(!isOpen)}
+    >
+      {/* Collapsed Row Content (Always visible) */}
+      <div className={rowClasses}>
+        {/* 1. Feature Name */}
+        <div className="p-4 flex items-center gap-3">
+          <item.icon className="w-5 h-5 text-primary flex-shrink-0" />
+          <span className="font-semibold text-foreground text-base">{item.feature}</span>
+          <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-300 ml-auto lg:hidden ${isOpen ? 'rotate-180' : ''}`} />
+        </div>
+
+        {/* 2. DeSuite Content (Visible only on Desktop or when Open on Mobile) */}
+        <div className="p-4 border-l text-sm hidden lg:block">
+          <div className="flex items-start text-primary font-medium">
+            <CheckCircle className="w-4 h-4 mr-2 mt-1 flex-shrink-0" />
+            <p className="text-foreground/80 line-clamp-2">{item.desuite}</p>
+          </div>
+        </div>
+
+        {/* 3. Permissioned DLT Content (Visible only on Desktop or when Open on Mobile) */}
+        <div className="p-4 border-l text-sm hidden lg:block">
+          <div className="flex items-start text-muted-foreground font-medium">
+            <XCircle className="w-4 h-4 mr-2 mt-1 flex-shrink-0" />
+            <p className="text-foreground/80 line-clamp-2">{item.permissioned}</p>
+          </div>
+        </div>
+
+        {/* 4. Verdict/Takeaway (Always visible) */}
+        <div className="p-4 border-l text-sm hidden lg:block">
+          <p className="text-muted-foreground">
+            <Zap className="w-4 h-4 text-primary inline-block mr-1 -mt-0.5" />
+            <span className="font-semibold text-primary">{item.winner.split(':')[0]}</span>: {item.winner.split(':').slice(1).join(':').trim()}
+          </p>
+        </div>
+      </div>
+
+      {/* Expanded Row Content (Mobile/Interaction) */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="p-4 lg:hidden border-t border-border/50 bg-card"
+          >
+            <div className="space-y-4">
+                {/* DeSuite Content for Mobile */}
+                <div>
+                    <h4 className="flex items-center text-primary font-bold mb-1">
+                        <CheckCircle className="w-4 h-4 mr-2" /> DeSuite Advantage
+                    </h4>
+                    <p className="text-foreground/80 text-sm pl-6">{item.desuite}</p>
+                </div>
+
+                {/* Permissioned Content for Mobile */}
+                <div>
+                    <h4 className="flex items-center text-muted-foreground font-bold mb-1">
+                        <XCircle className="w-4 h-4 mr-2" /> Permissioned DLT Context
+                    </h4>
+                    <p className="text-foreground/80 text-sm pl-6">{item.permissioned}</p>
+                </div>
+
+                {/* Verdict for Mobile */}
+                <div>
+                    <h4 className="flex items-center text-primary font-bold mb-1">
+                        <Zap className="w-4 h-4 mr-2" /> Key Verdict
+                    </h4>
+                    <p className="text-muted-foreground text-sm pl-6">
+                        <span className="font-semibold text-primary">{item.winner.split(':')[0]}</span>: {item.winner.split(':').slice(1).join(':').trim()}
+                    </p>
+                </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
+
+
 export function ComparisonSection() {
   return (
     <section id="why-desuite" className="py-24 sm:py-32 bg-background relative overflow-hidden">
@@ -83,7 +178,7 @@ export function ComparisonSection() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-chart-4/10 border border-chart-4/20 mb-4">
             <Zap className="w-4 h-4 text-chart-4" />
-            <span className="text-sm font-medium text-chart-4">The Essential Web3 Layer</span>
+            <span className="text-sm font-medium text-chart-4">The Essential Public Blockchain Layer</span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
             <span className="gradient-text-chart-4">DeSuite vs. Permissioned Blockchains</span>
@@ -104,54 +199,19 @@ export function ComparisonSection() {
           {/* Table Container for Responsiveness */}
           <div className="min-w-[900px] lg:min-w-full">
             
-            {/* Header Row */}
-            <div className="grid grid-cols-[1fr_1.5fr_1.5fr_1fr] text-left font-display font-bold text-sm uppercase tracking-wider bg-card/90 border-b border-border/70">
+            {/* Header Row - Cleaned up colors */}
+            <div className="grid grid-cols-[1fr_1.5fr_1.5fr_1fr] text-left font-display font-bold text-sm uppercase tracking-wider bg-card border-b border-border/70">
                 <div className="p-4 text-foreground/80">Feature</div>
-                <div className="p-4 text-green-400 border-l border-border/70">DeSuite Advantage</div>
-                <div className="p-4 text-red-400 border-l border-border/70">Permissioned DLT Context</div>
-                <div className="p-4 text-primary border-l border-border/70">Verdict</div>
+                {/* Removed green/red color from header text */}
+                <div className="p-4 text-foreground border-l border-border/70 hidden lg:block">DeSuite Advantage</div>
+                <div className="p-4 text-foreground/70 border-l border-border/70 hidden lg:block">Permissioned DLT Context</div>
+                <div className="p-4 text-primary border-l border-border/70 hidden lg:block">Verdict</div>
+                <div className="p-4 text-foreground border-l border-border/70 block lg:hidden">Details (Tap to Expand)</div>
             </div>
 
             {/* Data Rows */}
             {comparisonData.map((item, index) => (
-                <motion.div 
-                    key={item.feature}
-                    variants={itemVariants}
-                    // Removed red/green backgrounds for a cleaner, modern look
-                    className="grid grid-cols-[1fr_1.5fr_1.5fr_1fr] group transition-colors duration-200 hover:bg-card/50 even:bg-card/30"
-                >
-                    {/* 1. Feature Name */}
-                    <div className="p-4 border-b border-border/50 flex items-center gap-3">
-                        <item.icon className="w-5 h-5 text-primary flex-shrink-0" />
-                        <span className="font-semibold text-foreground text-base">{item.feature}</span>
-                    </div>
-
-                    {/* 2. DeSuite Content */}
-                    {/* Removed bg-green-900/10 background */}
-                    <div className="p-4 border-b border-border/50 border-l text-sm">
-                        <div className="flex items-start text-green-400 mb-1">
-                            <CheckCircle className="w-4 h-4 mr-2 mt-1 flex-shrink-0" />
-                            <p className="text-foreground/80">{item.desuite.replace(/DeSuite/g, 'DeSuite')}</p> {/* Replaced DESUITE with DeSuite */}
-                        </div>
-                    </div>
-
-                    {/* 3. Permissioned DLT Content */}
-                    {/* Removed bg-red-900/10 background, updated content reference */}
-                    <div className="p-4 border-b border-border/50 border-l text-sm">
-                         <div className="flex items-start text-red-400 mb-1">
-                            <XCircle className="w-4 h-4 mr-2 mt-1 flex-shrink-0" />
-                            <p className="text-foreground/80">{item.permissioned}</p>
-                        </div>
-                    </div>
-
-                    {/* 4. Verdict/Takeaway */}
-                    <div className="p-4 border-b border-border/50 border-l text-sm">
-                        <p className="text-muted-foreground">
-                            <Zap className="w-4 h-4 text-primary inline-block mr-1 -mt-0.5" />
-                            <span className="font-semibold text-primary">{item.winner.split(':')[0].replace(/DeSuite/g, 'DeSuite')}</span>: {item.winner.split(':').slice(1).join(':').trim()}
-                        </p>
-                    </div>
-                </motion.div>
+                <ComparisonRow key={item.feature} item={item} index={index} />
             ))}
           </div>
         </motion.div>
