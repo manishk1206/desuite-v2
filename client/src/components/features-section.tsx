@@ -1,17 +1,17 @@
 import { motion } from "framer-motion";
-import { Coins, Layers, Database, Shield, Globe2, Code2 } from "lucide-react";
+import { Coins, Layers, Database, Shield, Globe2, Code2, DollarSign, NetworkIcon } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const features = [
   {
-    icon: Coins,
-    title: "Stablecoin Integration",
-    description: "Process payments in USDC, USDT, XSGD and other major stablecoins directly from your ERP workflows with automatic reconciliation.",
+    icon: Code2,
+    title: "API-First Design",
+    description: "RESTful APIs and webhooks for seamless integration. Plug-and-play architecture with built-in security",
   },
   {
-    icon: Layers,
-    title: "Real-time Tokenization",
-    description: "Convert enterprise assets into blockchain tokens instantly. Inventory, receivables, and real estate - all tokenizable.",
+    icon: Shield,
+    title: "Enterprise Data Privacy",
+    description: "Zero-Knowledge Solution: Data stays off-chain in the Oracle ERP. DeSuite only publishes verifiable, anonymous proofs on the public ledger.",
   },
   {
     icon: Database,
@@ -19,20 +19,21 @@ const features = [
     description: "Purpose-built for Oracle ERP. No middleware complexity or custom development required.",
   },
   {
-    icon: Shield,
-    title: "Compliance Layer",
-    description: "Built-in regulatory compliance with KYC/AML verification, audit trails, and jurisdiction-aware transaction handling.",
+    icon: DollarSign,
+    title: "Stablecoin Integration",
+    description: "Process payments in USDC, USDT, XSGD and other major stablecoins directly from your ERP workflows with automatic reconciliation.",
   },
   {
-    icon: Globe2,
+    icon: Coins,
+    title: "Real-time Tokenization",
+    description: "Convert enterprise assets into blockchain tokens instantly. Inventory, receivables, and real estate - all tokenizable.",
+  },
+  {
+    icon: NetworkIcon,
     title: "Multi-chain Support",
-    description: "Deploy across Ethereum, Polygon, Base and Multi-chain. One integration, multiple networks.",
+    description: "Deploy across Ethereum, L2s and other major L1 chains. One integration, multiple networks.",
   },
-  {
-    icon: Code2,
-    title: "API-First Design",
-    description: "RESTful APIs and webhooks for seamless integration. Plug-and-play architecture with built-in security",
-  },
+  
 ];
 
 const containerVariants = {
