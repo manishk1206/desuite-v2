@@ -3,21 +3,6 @@ import { Coins, Layers, Database, Shield, Globe2, Code2, DollarSign, NetworkIcon
 import { Card } from "@/components/ui/card";
 
 const features = [
-   {
-    icon: Shield,
-    title: "Enterprise Data Privacy",
-    description: "Zero-Knowledge Solution: Data stays off-chain in the Oracle ERP. DeSuite only publishes verifiable, anonymous proofs on the public ledger.",
-  },
-  {
-    icon: Code2,
-    title: "API-First Design",
-    description: "RESTful APIs and webhooks for seamless integration. Plug-and-play architecture with built-in security",
-  },
-  {
-    icon: Database,
-    title: "Oracle Native",
-    description: "Purpose-built for Oracle ERP. No middleware complexity or custom development required.",
-  },
   {
     icon: DollarSign,
     title: "Stablecoin Integration",
@@ -31,9 +16,23 @@ const features = [
   {
     icon: NetworkIcon,
     title: "Multi-chain Support",
-    description: "Deploy across Ethereum, L2s and other major L1 chains. One integration, multiple networks.",
+    description: "Deploy across Ethereum, Polygon, and other major L1 and L2 chains. One integration, multiple networks.",
   },
-  
+   {
+    icon: Shield,
+    title: "Enterprise Data Privacy",
+    description: "DeSuite used zKZero-Knowledge Solution Data stays off-chain in the Oracle ERP. DeSuite only publishes verifiable, anonymous zk-Proofs on the public ledger.",
+  },
+  {
+    icon: Code2,
+    title: "API-First Design",
+    description: "RESTful APIs and webhooks for seamless integration. Plug-and-play architecture with built-in security",
+  },
+  {
+    icon: Database,
+    title: "Oracle Native",
+    description: "Purpose-built for Oracle ERP. No middleware complexity or custom development required.",
+  },  
 ];
 
 const containerVariants = {
