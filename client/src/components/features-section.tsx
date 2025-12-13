@@ -3,15 +3,15 @@ import { Coins, Layers, Database, Shield, Globe2, Code2, DollarSign, NetworkIcon
 import { Card } from "@/components/ui/card";
 
 const features = [
+   {
+    icon: Shield,
+    title: "Enterprise Data Privacy",
+    description: "Zero-Knowledge Solution: Data stays off-chain in the Oracle ERP. DeSuite only publishes verifiable, anonymous proofs on the public ledger.",
+  },
   {
     icon: Code2,
     title: "API-First Design",
     description: "RESTful APIs and webhooks for seamless integration. Plug-and-play architecture with built-in security",
-  },
-  {
-    icon: Shield,
-    title: "Enterprise Data Privacy",
-    description: "Zero-Knowledge Solution: Data stays off-chain in the Oracle ERP. DeSuite only publishes verifiable, anonymous proofs on the public ledger.",
   },
   {
     icon: Database,
