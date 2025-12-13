@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "./theme-toggle";
-import { Menu, X, Layers } from "lucide-react"; // Layers imported here
+// Assuming Button and ThemeToggle are imported from a utility folder
+// If these fail, you may need to provide the code for Button and ThemeToggle
+import { Button } from "@/components/ui/button"; 
+import { ThemeToggle } from "./theme-toggle"; 
+import { Menu, X, Layers } from "lucide-react"; 
 import { motion, AnimatePresence } from "framer-motion";
 
 interface NavigationProps {}
@@ -10,7 +12,7 @@ const navItems = [
   { label: "Product", href: "#product" },
   { label: "How It Works", href: "#how-it-works" },
   { label: "Features", href: "#features" },
-  { label: "Why DeSuite", href: "#why-desuite" }, // Added the new link
+  { label: "Why DeSuite", href: "#why-desuite" }, // The active link
   { label: "Enterprise", href: "#enterprise" },
 ];
 
@@ -41,7 +43,6 @@ export function Navigation({}: NavigationProps) {
             className="flex items-center gap-2"
             data-testid="link-logo"
           >
-            {/* LOGO UPDATE: Replaced the 'D' text span with the Layers icon */}
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <Layers className="w-4 h-4 text-primary-foreground" />
             </div>
@@ -63,7 +64,6 @@ export function Navigation({}: NavigationProps) {
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            {/* CORRECTED: Desktop Button now uses the real Calendly link */}
             <Button
               asChild
               className="hidden sm:inline-flex"
@@ -115,19 +115,17 @@ export function Navigation({}: NavigationProps) {
                   {item.label}
                 </a>
               ))}
-              {/* CORRECTED: Mobile Button now uses the real Calendly link */}
               <Button
                 asChild
                 className="w-full mt-4"
                 data-testid="button-mobile-book-demo"
-                // Only close the menu on click, the <a> tag handles navigation
                 onClick={() => setIsMobileMenuOpen(false)} 
               >
                 <a 
                   href="https://calendly.com/manishk1206/30min"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full text-center" // Ensure the mobile link spans the full width
+                  className="w-full text-center"
                 >
                   Book a Demo
                 </a>

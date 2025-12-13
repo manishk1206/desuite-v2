@@ -58,6 +58,7 @@ const itemVariants = {
 
 export function ComparisonSection() {
   return (
+    // !!! CRUCIAL: This ID must match the navigation link's href="#why-desuite"
     <section id="why-desuite" className="py-24 sm:py-32 bg-background relative overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
