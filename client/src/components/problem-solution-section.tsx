@@ -34,7 +34,7 @@ const solutions = [
   {
     icon: RefreshCw,
     title: "Automated Workflows",
-    description: "Real-time synchronization between ERP operations and blockchain transactions, increrasing overall business process efficiency",
+    description: "Real-time synchronization between ERP operations and blockchain transactions, enhancing overall business process efficiency",
   },
 ];
 
