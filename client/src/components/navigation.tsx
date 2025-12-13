@@ -10,6 +10,7 @@ const navItems = [
   { label: "Product", href: "#product" },
   { label: "How It Works", href: "#how-it-works" },
   { label: "Features", href: "#features" },
+  { label: "Why DeSuite", href: "#why-desuite" }, // Added the new link
   { label: "Enterprise", href: "#enterprise" },
 ];
 
