@@ -1,41 +1,54 @@
-import { CheckCircle, XCircle, Zap, Shield, Globe, Layers, TrendingUp, Lock } from "lucide-react";
+import {
+  CheckCircle,
+  XCircle,
+  Zap,
+  Shield,
+  Globe,
+  Layers,
+  TrendingUp,
+  Lock,
+  Network, // New Icon: Network for Interoperability
+  DollarSign, // New Icon: DollarSign for Cost Basis
+  Fingerprint, // New Icon: Fingerprint for Data Privacy
+  Cpu, // New Icon: Cpu for Liquidity
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 // Defines the data structure for the comparison points.
 const comparisonData = [
   {
-    icon: Globe,
+    icon: Cpu,
     feature: "Liquidity & Composability",
-    desuite: "Global, Deep Liquidity. Access established stablecoins (USDC, EURC) and massive DeFi capital pools. Instantly usable everywhere.",
-    obpda: "Walled Garden Liquidity. Liquidity is limited to institutions within the closed consortium. Assets are illiquid outside this network.",
+    desuite: "Global, Deep Liquidity. Access established stablecoins (USDC, EURC) and massive public blockchain capital pools. Instantly usable everywhere.",
+    permissioned: "Walled Garden Liquidity. Liquidity is limited to institutions within the closed consortium. Assets are illiquid outside this network.",
     winner: "DeSuite: Liquidity drives value. A permissioned token is an 'illiquid island'.",
   },
   {
-    icon: Layers,
+    icon: Network,
     feature: "Interoperability",
-    desuite: "Universal Standards (ERC-20/721). Easily connects to any other DApp, wallet, or financial institution globally.",
-    obpda: "Bilateral Integration. Requires a separate, costly integration process for every single external system or counterparty.",
+    desuite: "Universal Standards (ERC-20/721). Easily connects to any other DApp, wallet, or financial institution globally via public blockchain.",
+    permissioned: "Bilateral Integration. Requires a separate, costly integration process for every single external system or counterparty.",
     winner: "DeSuite: Standardized public tokens scale infinitely better than custom private tokens.",
   },
   {
-    icon: TrendingUp,
+    icon: DollarSign,
     feature: "Cost Basis",
-    desuite: "Low, Transparent Fees. Operates on decentralized infrastructure (L2s for scale). Cost is competitive and predictable.",
-    obpda: "High Institutional Cost. Requires high licensing, governance, and maintenance fees paid to the DLT provider/consortium.",
+    desuite: "Low, Transparent Fees. Operates on public decentralized infrastructure (L2s for scale). Cost is competitive and predictable.",
+    permissioned: "High Institutional Cost. Requires high licensing, governance, and maintenance fees paid to the DLT provider/consortium.",
     winner: "DeSuite: Infrastructure is a commodity on the public chain; true value is in your connector.",
   },
   {
     icon: Shield,
     feature: "Network Security",
-    desuite: "Decentralized Security. Guaranteed by vast, global consensus mechanisms (e.g., Proof-of-Stake). Highly immutable.",
-    obpda: "Centralized Risk. Security relies on the integrity of the founding consortium. Single point of attack/failure.",
+    desuite: "Decentralized Security. Guaranteed by vast, global consensus mechanisms (e.g., Proof-of-Stake) of the public blockchain. Highly immutable.",
+    permissioned: "Centralized Risk. Security relies on the integrity of the founding consortium. Single point of attack/failure.",
     winner: "DeSuite: For true, long-term trust and immutability, decentralization wins.",
   },
   {
-    icon: Lock,
+    icon: Fingerprint,
     feature: "Enterprise Data Privacy",
     desuite: "Zero-Knowledge Solution. Data stays off-chain in Oracle ERP. Only verifiable, anonymous proofs are published publicly.",
-    obpda: "Limited Access Privacy. Privacy is achieved through institutional trust/limited access, not cryptographic proof.",
+    permissioned: "Limited Access Privacy. Privacy is achieved through institutional trust/limited access, not cryptographic proof.",
     winner: "DeSuite: Cryptographically ensures privacy while achieving public transparency.",
   },
 ];
@@ -73,10 +86,10 @@ export function ComparisonSection() {
             <span className="text-sm font-medium text-chart-4">The Essential Web3 Layer</span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-            <span className="gradient-text-chart-4">DeSuite vs. Traditional DLT Solutions</span>
+            <span className="gradient-text-chart-4">DeSuite vs. Permissioned Blockchains</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Compare the foundational differences between leveraging decentralized public infrastructure (DeSuite) and utilizing a closed, permissioned DLT (such as OBP-DA).
+            Compare the foundational differences between leveraging decentralized public infrastructure (DeSuite) and utilizing a closed, permissioned DLT.
           </p>
         </motion.div>
 
@@ -95,7 +108,7 @@ export function ComparisonSection() {
             <div className="grid grid-cols-[1fr_1.5fr_1.5fr_1fr] text-left font-display font-bold text-sm uppercase tracking-wider bg-card/90 border-b border-border/70">
                 <div className="p-4 text-foreground/80">Feature</div>
                 <div className="p-4 text-green-400 border-l border-border/70">DeSuite Advantage</div>
-                <div className="p-4 text-red-400 border-l border-border/70">OBP-DA Context</div>
+                <div className="p-4 text-red-400 border-l border-border/70">Permissioned DLT Context</div>
                 <div className="p-4 text-primary border-l border-border/70">Verdict</div>
             </div>
 
@@ -104,27 +117,30 @@ export function ComparisonSection() {
                 <motion.div 
                     key={item.feature}
                     variants={itemVariants}
-                    className="grid grid-cols-[1fr_1.5fr_1.5fr_1fr] group transition-colors duration-200 hover:bg-card/50"
+                    // Removed red/green backgrounds for a cleaner, modern look
+                    className="grid grid-cols-[1fr_1.5fr_1.5fr_1fr] group transition-colors duration-200 hover:bg-card/50 even:bg-card/30"
                 >
                     {/* 1. Feature Name */}
-                    <div className="p-4 border-b border-border/50 flex items-center gap-3 bg-card/70">
+                    <div className="p-4 border-b border-border/50 flex items-center gap-3">
                         <item.icon className="w-5 h-5 text-primary flex-shrink-0" />
                         <span className="font-semibold text-foreground text-base">{item.feature}</span>
                     </div>
 
                     {/* 2. DeSuite Content */}
-                    <div className="p-4 border-b border-border/50 border-l text-sm bg-green-900/10 transition-colors duration-200 group-hover:bg-green-900/20">
+                    {/* Removed bg-green-900/10 background */}
+                    <div className="p-4 border-b border-border/50 border-l text-sm">
                         <div className="flex items-start text-green-400 mb-1">
                             <CheckCircle className="w-4 h-4 mr-2 mt-1 flex-shrink-0" />
-                            <p className="text-foreground/80">{item.desuite}</p>
+                            <p className="text-foreground/80">{item.desuite.replace(/DeSuite/g, 'DeSuite')}</p> {/* Replaced DESUITE with DeSuite */}
                         </div>
                     </div>
 
-                    {/* 3. OBP-DA Content */}
-                    <div className="p-4 border-b border-border/50 border-l text-sm bg-red-900/10 transition-colors duration-200 group-hover:bg-red-900/20">
+                    {/* 3. Permissioned DLT Content */}
+                    {/* Removed bg-red-900/10 background, updated content reference */}
+                    <div className="p-4 border-b border-border/50 border-l text-sm">
                          <div className="flex items-start text-red-400 mb-1">
                             <XCircle className="w-4 h-4 mr-2 mt-1 flex-shrink-0" />
-                            <p className="text-foreground/80">{item.obpda}</p>
+                            <p className="text-foreground/80">{item.permissioned}</p>
                         </div>
                     </div>
 
@@ -132,7 +148,7 @@ export function ComparisonSection() {
                     <div className="p-4 border-b border-border/50 border-l text-sm">
                         <p className="text-muted-foreground">
                             <Zap className="w-4 h-4 text-primary inline-block mr-1 -mt-0.5" />
-                            <span className="font-semibold text-primary">{item.winner.split(':')[0]}</span>: {item.winner.split(':').slice(1).join(':').trim()}
+                            <span className="font-semibold text-primary">{item.winner.split(':')[0].replace(/DeSuite/g, 'DeSuite')}</span>: {item.winner.split(':').slice(1).join(':').trim()}
                         </p>
                     </div>
                 </motion.div>
@@ -148,7 +164,7 @@ export function ComparisonSection() {
           transition={{ duration: 0.5, delay: 0.6 }}
           className="mt-16 text-center text-xl font-medium text-foreground max-w-4xl mx-auto p-4 border-t border-border/50"
         >
-          DeSuite is the pathway to leveraging the best of Web3, ensuring your Oracle ERP remains the source of truth while benefiting from global liquidity, interoperability, and true decentralized security.
+          DeSuite is the pathway to leveraging the best of public blockchain, ensuring your Oracle ERP remains the source of truth while benefiting from global liquidity, interoperability, and true decentralized security.
         </motion.p>
       </div>
       {/* Background glow for consistency */}
