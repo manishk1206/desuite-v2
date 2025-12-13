@@ -6,7 +6,7 @@ const features = [
   {
     icon: CircleDollarSign,
     title: "Stablecoin Integration",
-    description: "Process payments in USDC, USDT, XSGD and other major stablecoins directly from your ERP workflows with automatic reconciliation.",
+    description: "Process payments in USDC and other major stablecoins directly from your ERP workflows with automatic reconciliation.",
   },
   {
     icon: Coins,
@@ -16,22 +16,22 @@ const features = [
   {
     icon: Atom,
     title: "Multi-chain Support",
-    description: "Deploy across Ethereum, Polygon and other major L1 and L2 chains. One integration, multiple networks.",
+    description: "Deploy across Ethereum, Polygon, Base and other major L1 and L2 chains. One integration, multiple networks.",
   },
    {
     icon: KeyRound,
     title: "Enterprise Data Privacy",
-    description: "Zero-Knowledge Solution: Data stays off-chain in the Oracle ERP. DeSuite only publishes verifiable, anonymous zk-Proofs on the public ledger.",
+    description: "Data stays off-chain in the Oracle ERP. DeSuite only publishes verifiable, anonymous zk-Proofs on the public ledger.",
   },
   {
     icon: Code2,
     title: "API-First Design",
-    description: "Plug-and-play architecture: RESTful APIs and webhooks for seamless integration with built-in security.",
+    description: "RESTful APIs and webhooks for seamless integration with built-in security.",
   },
   {
     icon: Database,
     title: "Oracle Native",
-    description: "Purpose-built for Oracle ERP. No middleware complexity or custom development required.",
+    description: "Purpose-built for Oracle ERP using a plug-and-play architecture. No middleware complexity or custom development required.",
   },
   
 ];

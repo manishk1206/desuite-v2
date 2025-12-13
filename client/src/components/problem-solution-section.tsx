@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { AlertTriangle, CheckCircle2, XCircle, Zap, Shield, RefreshCw, ShieldCheck, Workflow, UnplugIcon, ShieldAlert } from "lucide-react";
 
 const problems = [
+  
   {
     icon: UnplugIcon,
     title: "Fragmented Systems",
@@ -10,7 +11,7 @@ const problems = [
   {
     icon: ShieldAlert,
     title: "Complex Integration",
-    description: "Traditional Web3 integration requires extensive development resources and specialized expertise",
+    description: "Traditional integration requires extensive development and specialized expertise in both ERP and blockchain which is hard to find",
   },
   {
     icon: Workflow,
@@ -28,7 +29,7 @@ const solutions = [
   {
     icon: ShieldCheck,
     title: "Enterprise Ready",
-    description: "Production-grade infrastructure with compliance, security, and audit trails built-in",
+    description: "Production-grade infrastructure with compliance, security and audit trails built-in from experts in the field",
   },
   {
     icon: RefreshCw,
