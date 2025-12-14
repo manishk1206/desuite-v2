@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 // Assuming Button and ThemeToggle are imported from a utility folder
-// If these fail, you may need to provide the code for Button and ThemeToggle
 import { Button } from "@/components/ui/button"; 
 import { ThemeToggle } from "./theme-toggle"; 
 import { Menu, X, Layers } from "lucide-react"; 
@@ -8,16 +7,15 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface NavigationProps {}
 
-// Define the path for the downloadable file. We are using the HTML file path
-// since it is currently placed next to index.html.
-const WHITEPAPER_DOWNLOAD_PATH = "/whitepaper_onepager.html";
+// FIX: Aligning path with why-desuite-section.tsx to use relative path and fix 404
+const WHITEPAPER_DOWNLOAD_PATH = "./whitepaper_onepager.html";
 
-// Define the navigation items, adding an 'isDownload' flag for the new link.
+// Define the navigation items, retaining the 'isDownload' flag to indicate special handling
 const navItems = [
   { label: "Product", href: "#product", isDownload: false },
   { label: "How It Works", href: "#how-it-works", isDownload: false },
   { label: "Features", href: "#features", isDownload: false },
-  // UPDATED: This now links directly to the HTML file but suggests a PDF name on download
+  // Link is marked as a download to trigger the custom print handler
   { 
     label: "Why DeSuite", 
     href: WHITEPAPER_DOWNLOAD_PATH, 
@@ -28,8 +26,7 @@ const navItems = [
 
 export function Navigation({}: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen] = useState(false); // Removed setIsMobileMenuOpen to avoid conflicts
-  const [isMobileMenuOpenState, setIsMobileMenuOpenState] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 
   useEffect(() => {
@@ -40,10 +37,27 @@ export function Navigation({}: NavigationProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Helper function to close the menu when a mobile link is clicked
-  const handleMobileClick = () => {
-    // Close the menu when any link is clicked, including the download link
-    setIsMobileMenuOpenState(false);
+  // Custom print function, mirrored from why-desuite-section.tsx
+  const handlePrint = () => {
+      // Open the HTML document in a new window/tab using the relative path
+      const printWindow = window.open(WHITEPAPER_DOWNLOAD_PATH, '_blank');
+      
+      if (printWindow) {
+          printWindow.onload = () => {
+              // Trigger the browser's native print dialog
+              printWindow.print(); 
+          };
+      }
+  };
+
+  // Helper function to handle link clicks (triggers print for download link, closes menu)
+  const handleLinkClick = (item: typeof navItems[0]) => (e: React.MouseEvent) => {
+    if (item.isDownload) {
+      e.preventDefault(); // CRUCIAL: Stop the browser from attempting a direct download/navigation
+      handlePrint();
+    }
+    // Close the menu if on mobile
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -72,13 +86,8 @@ export function Navigation({}: NavigationProps) {
               <a
                 key={item.label}
                 href={item.href}
-                // Conditional attributes applied for download links
-                {...(item.isDownload && { 
-                    // Suggests a PDF name, even though it links to an HTML file
-                    download: "DeSuite_OnePager.pdf", 
-                    target: "_blank", 
-                    rel: "noopener noreferrer" 
-                })}
+                // Apply the unified click handler.
+                onClick={handleLinkClick(item)} 
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
                 data-testid={`link-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
               >
@@ -106,20 +115,20 @@ export function Navigation({}: NavigationProps) {
               size="icon"
               variant="ghost"
               className="lg:hidden"
-              onClick={() => setIsMobileMenuOpenState(!isMobileMenuOpenState)}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               data-testid="button-mobile-menu"
               aria-label="Toggle menu"
-              aria-expanded={isMobileMenuOpenState}
+              aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
             >
-              {isMobileMenuOpenState ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
       </nav>
 
       <AnimatePresence>
-        {isMobileMenuOpenState && (
+        {isMobileMenuOpen && (
           <motion.div
             id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
@@ -134,13 +143,8 @@ export function Navigation({}: NavigationProps) {
                   key={item.label}
                   href={item.href}
                   className="block py-2 px-4 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors"
-                  onClick={() => handleMobileClick()} 
-                  // Conditional attributes applied for download links
-                  {...(item.isDownload && { 
-                    download: "DeSuite_OnePager.pdf", 
-                    target: "_blank", 
-                    rel: "noopener noreferrer" 
-                  })}
+                  // Apply the unified click handler for mobile
+                  onClick={handleLinkClick(item)} 
                   data-testid={`link-mobile-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
                 >
                   {item.label}
@@ -150,7 +154,7 @@ export function Navigation({}: NavigationProps) {
                 asChild
                 className="w-full mt-4"
                 data-testid="button-mobile-book-demo"
-                onClick={() => handleMobileClick()} 
+                onClick={() => setIsMobileMenuOpen(false)} 
               >
                 <a 
                   href="https://calendly.com/manishk1206/30min"

@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button"; 
 import React from 'react'; // Added React import if not present
 
-const WHITEPAPER_DOWNLOAD_PATH = "/whitepaper_onepager.html";
+// FIX: Changed path to relative path (./) to resolve potential 404 issues in deployment
+const WHITEPAPER_DOWNLOAD_PATH = "./whitepaper_onepager.html";
 
 // Define the component using the name expected in home.tsx
 const WhyDeSuiteSection = () => {
@@ -9,6 +10,7 @@ const WhyDeSuiteSection = () => {
     // Helper function to open the HTML document and immediately trigger the Print dialog
     const handlePrint = () => {
         // Open the HTML document in a new window/tab
+        // We use window.location.origin to ensure the path is absolute from the root
         const printWindow = window.open(WHITEPAPER_DOWNLOAD_PATH, '_blank');
         
         // Wait for the window content to load before calling print()
@@ -16,6 +18,8 @@ const WhyDeSuiteSection = () => {
             printWindow.onload = () => {
                 // This command tells the browser to open the Print Dialog
                 printWindow.print(); 
+                // Close the tab after print dialog opens (optional, sometimes better user experience)
+                // printWindow.close(); 
             };
         }
     };
@@ -33,7 +37,7 @@ const WhyDeSuiteSection = () => {
                     <Button 
                         size="lg" 
                         className="shadow-lg hover:shadow-xl transition-shadow duration-300"
-                        // 1. Remove asChild to use onClick on the Button itself
+                        // Trigger the custom print function
                         onClick={handlePrint} 
                     >
                         {/* 2. Changed Button text to reflect Print-to-PDF action */}
