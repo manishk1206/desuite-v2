@@ -28,9 +28,7 @@ const navItems = [
 
 export function Navigation({}: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen] = useState(false); // Removed setIsMobileMenuOpen to avoid conflicts
-  const [isMobileMenuOpenState, setIsMobileMenuOpenState] = useState(false);
-
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,9 +39,9 @@ export function Navigation({}: NavigationProps) {
   }, []);
 
   // Helper function to close the menu when a mobile link is clicked
-  const handleMobileClick = () => {
+  const handleMobileClick = (item: typeof navItems[0]) => {
     // Close the menu when any link is clicked, including the download link
-    setIsMobileMenuOpenState(false);
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -106,20 +104,20 @@ export function Navigation({}: NavigationProps) {
               size="icon"
               variant="ghost"
               className="lg:hidden"
-              onClick={() => setIsMobileMenuOpenState(!isMobileMenuOpenState)}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               data-testid="button-mobile-menu"
               aria-label="Toggle menu"
-              aria-expanded={isMobileMenuOpenState}
+              aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
             >
-              {isMobileMenuOpenState ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
       </nav>
 
       <AnimatePresence>
-        {isMobileMenuOpenState && (
+        {isMobileMenuOpen && (
           <motion.div
             id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
@@ -134,7 +132,7 @@ export function Navigation({}: NavigationProps) {
                   key={item.label}
                   href={item.href}
                   className="block py-2 px-4 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors"
-                  onClick={() => handleMobileClick()} 
+                  onClick={() => handleMobileClick(item)} 
                   // Conditional attributes applied for download links
                   {...(item.isDownload && { 
                     download: "DeSuite_OnePager.pdf", 
@@ -150,7 +148,7 @@ export function Navigation({}: NavigationProps) {
                 asChild
                 className="w-full mt-4"
                 data-testid="button-mobile-book-demo"
-                onClick={() => handleMobileClick()} 
+                onClick={() => setIsMobileMenuOpen(false)} 
               >
                 <a 
                   href="https://calendly.com/manishk1206/30min"
