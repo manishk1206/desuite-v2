@@ -1,28 +1,50 @@
-import { Button } from "@/components/ui/button"; 
-import React from 'react'; // Added React import if not present
+import React from 'react'; 
+// Import lucide-react icons if needed, but not necessary here.
 
-// FIX: Changed path to relative path (./) to resolve potential 404 issues in deployment
+// --- Simplified Button Component (to ensure self-containment) ---
+// This is a minimal implementation of a styled button that supports the 'asChild' prop.
+const CustomButton = ({ children, className = "", asChild = false, size = 'default', ...props }: { children: React.ReactNode, className?: string, asChild?: boolean, size?: 'lg' | 'default' }) => {
+    // Base styles (using Tailwind classes for primary/large button look)
+    const baseClasses = 'inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
+    
+    let sizeClasses = '';
+    if (size === 'lg') {
+        sizeClasses = 'h-12 px-6 py-3 text-lg'; // Larger size
+    } else {
+        sizeClasses = 'h-10 px-4 py-2 text-sm'; // Default size
+    }
+
+    // Assuming primary color background
+    const variantClasses = 'bg-primary text-primary-foreground shadow hover:bg-primary/90';
+
+    const finalClasses = `${baseClasses} ${sizeClasses} ${variantClasses} ${className}`;
+
+    if (asChild && children && React.isValidElement(children)) {
+        // Renders the child (e.g., an <a> tag) with the combined button styles
+        return React.cloneElement(children, { 
+            className: `${children.props.className || ''} ${finalClasses}`, 
+            ...props 
+        });
+    }
+
+    return (
+        <button className={finalClasses} {...props}>
+            {children}
+        </button>
+    );
+};
+// --- END Simplified Button Component ---
+
+
+// Path to the PDF file
 const WHITEPAPER_DOWNLOAD_PATH = "whitepaper_onepager.pdf";
+// Suggested filename for the downloaded file
+const DOWNLOAD_FILENAME = "DeSuite_Strategic_Brief.pdf"; 
 
 // Define the component using the name expected in home.tsx
 const WhyDeSuiteSection = () => {
-    
-    // Helper function to open the HTML document and immediately trigger the Print dialog
-    const handlePrint = () => {
-        // Open the HTML document in a new window/tab
-        // We use window.location.origin to ensure the path is absolute from the root
-        const printWindow = window.open(WHITEPAPER_DOWNLOAD_PATH, '_blank');
-        
-        // Wait for the window content to load before calling print()
-        if (printWindow) {
-            printWindow.onload = () => {
-                // This command tells the browser to open the Print Dialog
-                printWindow.print(); 
-                // Close the tab after print dialog opens (optional, sometimes better user experience)
-                // printWindow.close(); 
-            };
-        }
-    };
+    // Note: The download is now handled entirely by the anchor tag's 'download' attribute.
+    // The previous 'handlePrint' function has been removed.
 
     return (
         <section id="why-desuite" className="py-20 bg-background">
@@ -34,15 +56,24 @@ const WhyDeSuiteSection = () => {
                     Understand the fundamental shift from permissioned enterprise chains to public chain integration, and why DeSuite is the strategic bridge your Oracle ERP needs.
                 </p>
                 <div className="mt-10">
-                    <Button 
+                    <CustomButton 
                         size="lg" 
                         className="shadow-lg hover:shadow-xl transition-shadow duration-300"
-                        // Trigger the custom print function
-                        onClick={handlePrint} 
+                        asChild // Tells CustomButton to apply its styling to the child <a> tag
                     >
-                        {/* 2. Changed Button text to reflect Print-to-PDF action */}
-                        Print Strategic Brief (PDF)
-                    </Button>
+                        {/* The anchor tag triggers the download:
+                            1. href: points to the PDF file.
+                            2. download: suggests the name for the downloaded file.
+                        */}
+                        <a 
+                            href={WHITEPAPER_DOWNLOAD_PATH} 
+                            download={DOWNLOAD_FILENAME}
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
+                            Download Strategic Brief (PDF)
+                        </a>
+                    </CustomButton>
                 </div>
             </div>
         </section>
@@ -50,6 +81,4 @@ const WhyDeSuiteSection = () => {
 };
 
 // --- CORRECT EXPORT: This is what Home.tsx requires ---
-export default WhyDeSuiteSection; 
-
-// --- (If you have other named exports, they can go here) ---
+export default WhyDeSuiteSection;
