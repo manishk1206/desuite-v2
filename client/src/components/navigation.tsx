@@ -1,25 +1,24 @@
 import { useState, useEffect } from "react";
-// Assuming Button and ThemeToggle are imported from a utility folder
-import { Button } from "@/components/ui/button"; 
-// LINE CHANGED: Corrected import path for ThemeToggle
-import { ThemeToggle } from "@/components/ui/theme-toggle"; 
+import { Button } from "./button"; 
+import { ThemeToggle } from "./theme-toggle"; 
 import { Menu, X, Layers } from "lucide-react"; 
 import { motion, AnimatePresence } from "framer-motion";
 
 interface NavigationProps {}
 
-// LINE MODIFIED: Pointing to the available HTML source file instead of the non-existent PDF file.
-const WHITEPAPER_DOWNLOAD_PATH = "whitepaper_onepager.html";
+// Path to the source file containing the content
+const WHITEPAPER_SOURCE_PATH = "whitepaper_onepager.html";
+const WHITEPAPER_FILENAME = "DeSuite_Strategic_Brief.html"; // The desired download filename
 
-// Define the navigation items, retaining the 'isDownload' flag to indicate special handling
+// Define the navigation items
 const navItems = [
   { label: "Product", href: "#product", isDownload: false },
   { label: "How It Works", href: "#how-it-works", isDownload: false },
   { label: "Features", href: "#features", isDownload: false },
-  // Link is marked as a download/external link
+  // Setting href to '#' and using isDownload: true to trigger custom download logic
   { 
     label: "Why DeSuite", 
-    href: WHITEPAPER_DOWNLOAD_PATH, 
+    href: "#download-brief", 
     isDownload: true 
   }, 
   { label: "Enterprise", href: "#enterprise", isDownload: false },
@@ -28,6 +27,7 @@ const navItems = [
 export function Navigation({}: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
 
   useEffect(() => {
@@ -38,11 +38,51 @@ export function Navigation({}: NavigationProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // LINE CHANGED: Simplified handleLinkClick to remove print trigger logic.
-  // Helper function to handle link clicks (closes menu only, allows default link navigation)
+  // New function to handle programmatic file download
+  const handleDownload = async () => {
+    if (isDownloading) return;
+
+    setIsDownloading(true);
+
+    try {
+      // Fetch the content of the target file
+      const response = await fetch(WHITEPAPER_SOURCE_PATH);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${WHITEPAPER_SOURCE_PATH}: ${response.statusText}`);
+      }
+
+      // Read the content as text
+      const content = await response.text();
+
+      // Create a Blob from the content
+      const blob = new Blob([content], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+
+      // Create a temporary link element to trigger the download
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = WHITEPAPER_FILENAME;
+      document.body.appendChild(a);
+      a.click();
+      
+      // Clean up the temporary link and URL object
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+    } catch (error) {
+      console.error("Download failed:", error);
+      // Optional: Show a user-friendly error message in the UI
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
+  // Helper function to handle link clicks
   const handleLinkClick = (item: typeof navItems[0]) => (e: React.MouseEvent) => {
-    // We allow the default link behavior (following the href) to execute.
-    
+    if (item.isDownload) {
+      e.preventDefault(); // Prevent default navigation for the hash link
+      handleDownload();
+    }
     // Close the menu if on mobile
     setIsMobileMenuOpen(false);
   };
@@ -70,19 +110,22 @@ export function Navigation({}: NavigationProps) {
 
           <div className="hidden lg:flex items-center gap-8">
             {navItems.map((item) => (
-              // LINE ADDED: Added target="_blank" for download links to open in a new tab
               <a
                 key={item.label}
                 href={item.href}
-                // Apply the unified click handler.
+                // Apply the custom click handler for download/navigation
                 onClick={handleLinkClick(item)} 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
                 data-testid={`link-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
-                // ADDED: Setting target="_blank" for the PDF link
-                target={item.isDownload ? "_blank" : "_self"} 
-                rel={item.isDownload ? "noopener noreferrer" : undefined}
+                // Removed target/rel as the click handler manages the action
               >
                 {item.label}
+                {/* Optional visual indicator for download/external action */}
+                {item.isDownload && (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3 h-3 text-muted-foreground">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                )}
               </a>
             ))}
           </div>
@@ -130,19 +173,20 @@ export function Navigation({}: NavigationProps) {
           >
             <div className="px-4 py-4 space-y-2">
               {navItems.map((item) => (
-                // LINE ADDED: Added target="_blank" for mobile download links
                 <a
                   key={item.label}
                   href={item.href}
-                  className="block py-2 px-4 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors"
+                  className="block py-2 px-4 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors flex items-center gap-1"
                   // Apply the unified click handler for mobile
                   onClick={handleLinkClick(item)} 
                   data-testid={`link-mobile-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
-                  // ADDED: Setting target="_blank" for the PDF link on mobile
-                  target={item.isDownload ? "_blank" : "_self"} 
-                  rel={item.isDownload ? "noopener noreferrer" : undefined}
                 >
                   {item.label}
+                  {item.isDownload && (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3 h-3 text-muted-foreground">
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                      </svg>
+                  )}
                 </a>
               ))}
               <Button
