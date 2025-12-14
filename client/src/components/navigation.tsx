@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Layers, Sun, Moon } from "lucide-react"; 
+import { Button } from "./button"; 
+import { ThemeToggle } from "./theme-toggle"; 
+import { Menu, X, Layers } from "lucide-react"; 
 import { motion, AnimatePresence } from "framer-motion";
 
 interface NavigationProps {}
@@ -22,78 +24,7 @@ const navItems = [
   { label: "Enterprise", href: "#enterprise", isDownload: false },
 ];
 
-/* * --- Simplified Component Implementations ---
- * Since the imports for Button and ThemeToggle failed, we include simple 
- * functional replacements directly in this file to maintain structure and functionality.
- */
-
-// Replacement for Button component
-const CustomButton = ({ children, className = "", asChild = false, size = 'default', variant = 'default', ...props }: { children: React.ReactNode, className?: string, asChild?: boolean, size?: 'icon' | 'default', variant?: 'ghost' | 'default' }) => {
-  const baseClasses = 'inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
-  
-  let sizeClasses = '';
-  if (size === 'icon') {
-    sizeClasses = 'h-10 w-10 p-0';
-  } else {
-    sizeClasses = 'h-10 px-4 py-2';
-  }
-
-  let variantClasses = '';
-  if (variant === 'ghost') {
-    variantClasses = 'bg-transparent hover:bg-accent hover:text-accent-foreground';
-  } else {
-    // Default variant (simulating the primary button)
-    variantClasses = 'bg-primary text-primary-foreground shadow hover:bg-primary/90';
-  }
-
-  const finalClasses = `${baseClasses} ${sizeClasses} ${variantClasses} ${className}`;
-
-  if (asChild && children && React.isValidElement(children)) {
-    return React.cloneElement(children, { className: `${children.props.className || ''} ${finalClasses}`, ...props });
-  }
-
-  return (
-    <button className={finalClasses} {...props}>
-      {children}
-    </button>
-  );
-};
-
-// Replacement for ThemeToggle component
-const CustomThemeToggle = () => {
-  // Simple dark mode implementation based on body class, matching the standard setup
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof window !== 'undefined' && document.body.classList.contains('dark')) {
-      return true;
-    }
-    return false;
-  });
-
-  const toggleTheme = () => {
-    if (typeof window !== 'undefined') {
-      document.body.classList.toggle('dark');
-      setIsDark(document.body.classList.contains('dark'));
-    }
-  };
-
-  return (
-    <CustomButton
-      variant="ghost"
-      size="icon"
-      onClick={toggleTheme}
-      aria-label="Toggle theme"
-    >
-      {isDark ? (
-        <Sun className="h-5 w-5 transition-all" />
-      ) : (
-        <Moon className="h-5 w-5 transition-all" />
-      )}
-    </CustomButton>
-  );
-};
-
 export function Navigation({}: NavigationProps) {
-  // Existing state and useEffect for navigation visibility
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -106,12 +37,6 @@ export function Navigation({}: NavigationProps) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  
-  // Ensure we define React globally for the CustomButton to work
-  if (typeof React === 'undefined') {
-    const React = { useState, useEffect, cloneElement: (e: any, p: any) => ({ ...e, props: { ...e.props, ...p } }), isValidElement: (e: any) => true };
-  }
-
 
   // New function to handle programmatic file download
   const handleDownload = async () => {
@@ -123,8 +48,6 @@ export function Navigation({}: NavigationProps) {
       // Fetch the content of the target file
       const response = await fetch(WHITEPAPER_SOURCE_PATH);
       if (!response.ok) {
-        // Log the exact status code and text for debugging network issues
-        console.error(`Fetch failed with status: ${response.status} ${response.statusText}`);
         throw new Error(`Failed to fetch ${WHITEPAPER_SOURCE_PATH}: ${response.statusText}`);
       }
 
@@ -139,8 +62,6 @@ export function Navigation({}: NavigationProps) {
       const a = document.createElement('a');
       a.href = url;
       a.download = WHITEPAPER_FILENAME;
-      // Use target="_blank" to ensure the link opens or downloads properly in various browser sandbox modes
-      a.target = '_blank'; 
       document.body.appendChild(a);
       a.click();
       
@@ -196,6 +117,7 @@ export function Navigation({}: NavigationProps) {
                 onClick={handleLinkClick(item)} 
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
                 data-testid={`link-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+                // Removed target/rel as the click handler manages the action
               >
                 {item.label}
                 {/* Optional visual indicator for download/external action */}
@@ -209,8 +131,8 @@ export function Navigation({}: NavigationProps) {
           </div>
 
           <div className="flex items-center gap-3">
-            <CustomThemeToggle />
-            <CustomButton
+            <ThemeToggle />
+            <Button
               asChild
               className="hidden sm:inline-flex"
               data-testid="button-nav-book-demo"
@@ -222,8 +144,8 @@ export function Navigation({}: NavigationProps) {
               >
                 Book a Demo
               </a>
-            </CustomButton>
-            <CustomButton
+            </Button>
+            <Button
               size="icon"
               variant="ghost"
               className="lg:hidden"
@@ -234,7 +156,7 @@ export function Navigation({}: NavigationProps) {
               aria-controls="mobile-menu"
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </CustomButton>
+            </Button>
           </div>
         </div>
       </nav>
@@ -267,7 +189,7 @@ export function Navigation({}: NavigationProps) {
                   )}
                 </a>
               ))}
-              <CustomButton
+              <Button
                 asChild
                 className="w-full mt-4"
                 data-testid="button-mobile-book-demo"
@@ -281,7 +203,7 @@ export function Navigation({}: NavigationProps) {
                 >
                   Book a Demo
                 </a>
-              </CustomButton>
+              </Button>
             </div>
           </motion.div>
         )}
