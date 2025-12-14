@@ -37,25 +37,31 @@ export function Navigation({}: NavigationProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // LINE REMOVED: Custom print function (handlePrint) has been removed.
   // Custom print function, mirrored from why-desuite-section.tsx
-  const handlePrint = () => {
-      // Open the HTML document in a new window/tab using the relative path
-      const printWindow = window.open(WHITEPAPER_DOWNLOAD_PATH, '_blank');
+  // const handlePrint = () => {
+  //     // Open the HTML document in a new window/tab using the relative path
+  //     const printWindow = window.open(WHITEPAPER_DOWNLOAD_PATH, '_blank');
       
-      if (printWindow) {
-          printWindow.onload = () => {
-              // Trigger the browser's native print dialog
-              printWindow.print(); 
-          };
-      }
-  };
+  //     if (printWindow) {
+  //         printWindow.onload = () => {
+  //             // Trigger the browser's native print dialog
+  //             printWindow.print(); 
+  //         };
+  //     }
+  // };
 
-  // Helper function to handle link clicks (triggers print for download link, closes menu)
+  // LINE CHANGED: Simplified handleLinkClick to remove print trigger logic.
+  // Helper function to handle link clicks (closes menu only, allows default link navigation)
   const handleLinkClick = (item: typeof navItems[0]) => (e: React.MouseEvent) => {
-    if (item.isDownload) {
-      e.preventDefault(); // CRUCIAL: Stop the browser from attempting a direct download/navigation
-      handlePrint();
-    }
+    // OLD LOGIC (removed):
+    // if (item.isDownload) {
+    //   e.preventDefault(); 
+    //   handlePrint();
+    // }
+    
+    // NEW LOGIC: We allow the default link behavior (following the href) to execute.
+    
     // Close the menu if on mobile
     setIsMobileMenuOpen(false);
   };
@@ -83,6 +89,7 @@ export function Navigation({}: NavigationProps) {
 
           <div className="hidden lg:flex items-center gap-8">
             {navItems.map((item) => (
+              // LINE ADDED: Added target="_blank" for download links to open in a new tab
               <a
                 key={item.label}
                 href={item.href}
@@ -90,6 +97,9 @@ export function Navigation({}: NavigationProps) {
                 onClick={handleLinkClick(item)} 
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
                 data-testid={`link-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+                // ADDED: Setting target="_blank" for the PDF link
+                target={item.isDownload ? "_blank" : "_self"} 
+                rel={item.isDownload ? "noopener noreferrer" : undefined}
               >
                 {item.label}
               </a>
@@ -139,6 +149,7 @@ export function Navigation({}: NavigationProps) {
           >
             <div className="px-4 py-4 space-y-2">
               {navItems.map((item) => (
+                // LINE ADDED: Added target="_blank" for mobile download links
                 <a
                   key={item.label}
                   href={item.href}
@@ -146,6 +157,9 @@ export function Navigation({}: NavigationProps) {
                   // Apply the unified click handler for mobile
                   onClick={handleLinkClick(item)} 
                   data-testid={`link-mobile-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+                  // ADDED: Setting target="_blank" for the PDF link on mobile
+                  target={item.isDownload ? "_blank" : "_self"} 
+                  rel={item.isDownload ? "noopener noreferrer" : undefined}
                 >
                   {item.label}
                 </a>
