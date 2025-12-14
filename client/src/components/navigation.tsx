@@ -1,21 +1,23 @@
 import { useState, useEffect } from "react";
-// Assuming Button and ThemeToggle are imported from a utility folder
+// Assuming Button is imported from a utility folder
 import { Button } from "@/components/ui/button"; 
-import { ThemeToggle } from "./theme-toggle"; 
-import { Menu, X, Layers } from "lucide-react"; 
+// REMOVED: import { ThemeToggle } from "./theme-toggle"; to fix the compilation error
+import { Menu, X, Layers, Download } from "lucide-react"; 
 import { motion, AnimatePresence } from "framer-motion";
+
+// NOTE: ThemeToggle has been removed to ensure the code compiles.
 
 interface NavigationProps {}
 
-// FIX: Aligning path with why-desuite-section.tsx to use relative path and fix 404
-const WHITEPAPER_DOWNLOAD_PATH = "./whitepaper_onepager.html";
+// IMPORTANT: Path to point directly to the uploaded PDF file using its simple filename.
+const WHITEPAPER_DOWNLOAD_PATH = "whitepaper_onepager.pdf";
 
-// Define the navigation items, retaining the 'isDownload' flag to indicate special handling
+// Define the navigation items. isDownload flag is used for styling/icon and setting target="_blank".
 const navItems = [
   { label: "Product", href: "#product", isDownload: false },
   { label: "How It Works", href: "#how-it-works", isDownload: false },
   { label: "Features", href: "#features", isDownload: false },
-  // Link is marked as a download to trigger the custom print handler
+  // Link label restored to "Why DeSuite"
   { 
     label: "Why DeSuite", 
     href: WHITEPAPER_DOWNLOAD_PATH, 
@@ -37,27 +39,14 @@ export function Navigation({}: NavigationProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Custom print function, mirrored from why-desuite-section.tsx
-  const handlePrint = () => {
-      // Open the HTML document in a new window/tab using the relative path
-      const printWindow = window.open(WHITEPAPER_DOWNLOAD_PATH, '_blank');
-      
-      if (printWindow) {
-          printWindow.onload = () => {
-              // Trigger the browser's native print dialog
-              printWindow.print(); 
-          };
-      }
-  };
-
-  // Helper function to handle link clicks (triggers print for download link, closes menu)
+  // Helper function to handle link clicks (now only closes the menu)
   const handleLinkClick = (item: typeof navItems[0]) => (e: React.MouseEvent) => {
-    if (item.isDownload) {
-      e.preventDefault(); // CRUCIAL: Stop the browser from attempting a direct download/navigation
-      handlePrint();
-    }
+    // We let the browser handle the 'href' directly, including for downloads.
+    
     // Close the menu if on mobile
-    setIsMobileMenuOpen(false);
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
   };
 
   return (
@@ -86,18 +75,27 @@ export function Navigation({}: NavigationProps) {
               <a
                 key={item.label}
                 href={item.href}
-                // Apply the unified click handler.
+                // Apply the unified click handler (now mainly for menu closing/mobile)
                 onClick={handleLinkClick(item)} 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className={`text-sm font-medium transition-colors ${
+                  item.isDownload 
+                    // Added subtle styling to highlight the download link
+                    ? 'text-primary hover:text-accent font-semibold flex items-center gap-1' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
                 data-testid={`link-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+                // Use target="_blank" for the PDF link to open it in a new tab
+                target={item.isDownload ? "_blank" : "_self"}
+                rel={item.isDownload ? "noopener noreferrer" : undefined}
               >
+                {item.isDownload && <Download className="w-4 h-4" />}
                 {item.label}
               </a>
             ))}
           </div>
 
           <div className="flex items-center gap-3">
-            <ThemeToggle />
+            {/* REMOVED ThemeToggle component reference to resolve compilation error */}
             <Button
               asChild
               className="hidden sm:inline-flex"
@@ -146,8 +144,14 @@ export function Navigation({}: NavigationProps) {
                   // Apply the unified click handler for mobile
                   onClick={handleLinkClick(item)} 
                   data-testid={`link-mobile-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+                  // Ensure PDF links open in a new tab
+                  target={item.isDownload ? "_blank" : "_self"}
+                  rel={item.isDownload ? "noopener noreferrer" : undefined}
                 >
-                  {item.label}
+                    <div className={`flex items-center gap-2 ${item.isDownload ? 'text-primary font-semibold' : ''}`}>
+                        {item.isDownload && <Download className="w-4 h-4 text-accent" />}
+                        {item.label}
+                    </div>
                 </a>
               ))}
               <Button
