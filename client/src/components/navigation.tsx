@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 interface NavigationProps {}
 
 // FIX: Aligning path with why-desuite-section.tsx to use relative path and fix 404
-const WHITEPAPER_DOWNLOAD_PATH = "./whitepaper_onepager.pdf";
+const WHITEPAPER_DOWNLOAD_PATH = "whitepaper_onepager.pdf";
 
 // Define the navigation items, retaining the 'isDownload' flag to indicate special handling
 const navItems = [
