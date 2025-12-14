@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
 // Assuming Button and ThemeToggle are imported from a utility folder
 import { Button } from "@/components/ui/button"; 
-import { ThemeToggle } from "./theme-toggle"; 
+// LINE CHANGED: Corrected import path for ThemeToggle
+import { ThemeToggle } from "@/components/ui/theme-toggle"; 
 import { Menu, X, Layers } from "lucide-react"; 
 import { motion, AnimatePresence } from "framer-motion";
 
 interface NavigationProps {}
 
-// FIX: Aligning path with why-desuite-section.tsx to use relative path and fix 404
-const WHITEPAPER_DOWNLOAD_PATH = "whitepaper_onepager.pdf";
+// LINE MODIFIED: Pointing to the available HTML source file instead of the non-existent PDF file.
+const WHITEPAPER_DOWNLOAD_PATH = "whitepaper_onepager.html";
 
 // Define the navigation items, retaining the 'isDownload' flag to indicate special handling
 const navItems = [
   { label: "Product", href: "#product", isDownload: false },
   { label: "How It Works", href: "#how-it-works", isDownload: false },
   { label: "Features", href: "#features", isDownload: false },
-  // Link is marked as a download to trigger the custom print handler
+  // Link is marked as a download/external link
   { 
     label: "Why DeSuite", 
     href: WHITEPAPER_DOWNLOAD_PATH, 
@@ -37,30 +38,10 @@ export function Navigation({}: NavigationProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // LINE REMOVED: Custom print function (handlePrint) has been removed.
-  // Custom print function, mirrored from why-desuite-section.tsx
-  // const handlePrint = () => {
-  //     // Open the HTML document in a new window/tab using the relative path
-  //     const printWindow = window.open(WHITEPAPER_DOWNLOAD_PATH, '_blank');
-      
-  //     if (printWindow) {
-  //         printWindow.onload = () => {
-  //             // Trigger the browser's native print dialog
-  //             printWindow.print(); 
-  //         };
-  //     }
-  // };
-
   // LINE CHANGED: Simplified handleLinkClick to remove print trigger logic.
   // Helper function to handle link clicks (closes menu only, allows default link navigation)
   const handleLinkClick = (item: typeof navItems[0]) => (e: React.MouseEvent) => {
-    // OLD LOGIC (removed):
-    // if (item.isDownload) {
-    //   e.preventDefault(); 
-    //   handlePrint();
-    // }
-    
-    // NEW LOGIC: We allow the default link behavior (following the href) to execute.
+    // We allow the default link behavior (following the href) to execute.
     
     // Close the menu if on mobile
     setIsMobileMenuOpen(false);
