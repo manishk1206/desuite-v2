@@ -1,15 +1,28 @@
 import { Button } from "@/components/ui/button"; 
-import React from 'react'; 
-// Import Download icon from lucide-react for better visual feedback
-import { Download } from 'lucide-react'; 
+import React from 'react'; // Added React import if not present
 
-// IMPORTANT: This path points directly to the uploaded PDF file.
-const WHITEPAPER_DOWNLOAD_PATH = "file://whitepaper_onepager.pdf";
+// FIX: Changed path to relative path (./) to resolve potential 404 issues in deployment
+const WHITEPAPER_DOWNLOAD_PATH = "./whitepaper_onepager.html";
 
 // Define the component using the name expected in home.tsx
 const WhyDeSuiteSection = () => {
     
-    // We no longer need a separate function for printing; we use a standard <a> tag for the download link.
+    // Helper function to open the HTML document and immediately trigger the Print dialog
+    const handlePrint = () => {
+        // Open the HTML document in a new window/tab
+        // We use window.location.origin to ensure the path is absolute from the root
+        const printWindow = window.open(WHITEPAPER_DOWNLOAD_PATH, '_blank');
+        
+        // Wait for the window content to load before calling print()
+        if (printWindow) {
+            printWindow.onload = () => {
+                // This command tells the browser to open the Print Dialog
+                printWindow.print(); 
+                // Close the tab after print dialog opens (optional, sometimes better user experience)
+                // printWindow.close(); 
+            };
+        }
+    };
 
     return (
         <section id="why-desuite" className="py-20 bg-background">
@@ -21,22 +34,22 @@ const WhyDeSuiteSection = () => {
                     Understand the fundamental shift from permissioned enterprise chains to public chain integration, and why DeSuite is the strategic bridge your Oracle ERP needs.
                 </p>
                 <div className="mt-10">
-                    {/* Using a standard <a> tag wrapped in Button styling for the link */}
-                    <a 
-                        href={WHITEPAPER_DOWNLOAD_PATH}
-                        target="_blank" // Opens the PDF in a new tab/window
-                        rel="noopener noreferrer"
-                        // Tailwind classes for button styling, matching the original Button component aesthetic
-                        className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-11 px-8 bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl duration-300"
-                        style={{ height: '3rem', padding: '0 2rem' }} // size="lg" equivalent
+                    <Button 
+                        size="lg" 
+                        className="shadow-lg hover:shadow-xl transition-shadow duration-300"
+                        // Trigger the custom print function
+                        onClick={handlePrint} 
                     >
-                        <Download className="w-5 h-5 mr-2" />
-                        Download Strategic Brief (PDF)
-                    </a>
+                        {/* 2. Changed Button text to reflect Print-to-PDF action */}
+                        Print Strategic Brief (PDF)
+                    </Button>
                 </div>
             </div>
         </section>
     );
 };
 
-export default WhyDeSuiteSection;
+// --- CORRECT EXPORT: This is what Home.tsx requires ---
+export default WhyDeSuiteSection; 
+
+// --- (If you have other named exports, they can go here) ---
