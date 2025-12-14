@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import React from 'react'; // Added React import if not present
 
 // FIX: Changed path to relative path (./) to resolve potential 404 issues in deployment
-const WHITEPAPER_DOWNLOAD_PATH = "./whitepaper_onepager.html";
+const WHITEPAPER_DOWNLOAD_PATH = "./whitepaper_onepager.pdf";
 
 // Define the component using the name expected in home.tsx
 const WhyDeSuiteSection = () => {
