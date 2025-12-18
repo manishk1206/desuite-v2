@@ -89,7 +89,7 @@ export function HeroSection({}: HeroSectionProps) {
             rel="noopener noreferrer"
             data-testid="link-hero-learn-more"
 >
-  Learn More
+  Read Whitepaper
 </a>
           </Button>
         </motion.div>
