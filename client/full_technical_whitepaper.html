@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeSuite - Implementing Stablecoin Transactions in Oracle Fusion ERP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* DeSuite Brand Colors */
+            --primary: #1e293b; /* Slate 800 */
+            --primary-dark: #0f172a; /* Slate 900 */
+            --accent: #6366f1; /* Indigo 500 */
+            --accent-light: #e0e7ff; /* Indigo 100 */
+            --text-body: #334155; /* Slate 700 */
+            --text-muted: #64748b; /* Slate 500 */
+            --bg-page: #ffffff;
+            --bg-secondary: #f8fafc; /* Slate 50 */
+            --border: #e2e8f0;
+            
+            /* Dimensions */
+            --page-width: 210mm;
+            --page-height: 297mm;
+            --margin: 25mm;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-body);
+            background-color: #555; /* Dark background for browser view to pop the pages */
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* Page Structure */
+        .page {
+            width: var(--page-width);
+            min-height: var(--page-height);
+            background: var(--bg-page);
+            margin: 0 auto 20px auto;
+            padding: var(--margin);
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            color: var(--primary);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: 28pt; margin-bottom: 10pt; }
+        h2 { 
+            font-size: 18pt; 
+            margin-top: 25pt; 
+            margin-bottom: 12pt; 
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 5pt;
+            display: inline-block;
+            width: 100%;
+        }
+        h3 { 
+            font-size: 14pt; 
+            margin-top: 15pt; 
+            margin-bottom: 8pt; 
+            color: var(--accent);
+        }
+        h4 { font-size: 12pt; margin-top: 10pt; margin-bottom: 5pt; }
+        
+        p { 
+            margin-bottom: 10pt; 
+            text-align: justify;
+            font-size: 10.5pt;
+        }
+
+        ul { margin-bottom: 10pt; padding-left: 20px; }
+        li { margin-bottom: 5pt; font-size: 10.5pt; }
+
+        /* Cover Page Styling */
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 0;
+        }
+
+        .cover-content {
+            padding: var(--margin);
+            padding-top: 60mm;
+        }
+
+        .cover-logo {
+            font-size: 24pt;
+            font-weight: 800;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        /* Updated Logo Styles */
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .cover-title {
+            font-size: 36pt;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .cover-subtitle {
+            font-size: 16pt;
+            opacity: 0.9;
+            font-weight: 300;
+            border-left: 4px solid var(--accent);
+            padding-left: 20px;
+        }
+
+        .cover-footer {
+            background: var(--bg-page);
+            color: var(--primary);
+            padding: var(--margin);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .report-meta div {
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+        
+        .report-meta span {
+            font-size: 11pt;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        /* Abstract Box */
+        .abstract-box {
+            background-color: var(--bg-secondary);
+            border-left: 5px solid var(--accent);
+            padding: 20px;
+            font-style: italic;
+            font-family: 'Merriweather', serif;
+            color: var(--text-body);
+            margin-bottom: 30px;
+        }
+
+        /* Table of Contents */
+        .toc-title {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 12pt;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .toc-item.sub {
+            padding-left: 20px;
+            font-weight: 400;
+            font-size: 10pt;
+            color: var(--text-muted);
+        }
+
+        /* Comparison Table Styling (Imported from One-Pager) */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 9pt;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .comparison-table th {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            text-transform: uppercase;
+            font-size: 8pt;
+            letter-spacing: 0.5px;
+        }
+
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .col-feature { width: 15%; font-weight: 700; color: var(--primary); background: #f8fafc; }
+        .col-public { width: 35%; background: var(--accent-light); color: var(--primary-dark); }
+        .col-perm { width: 35%; }
+        .col-verdict { width: 15%; font-weight: 700; color: var(--accent); text-align: right; }
+
+        /* Code Blocks */
+        .code-block {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 8.5pt;
+            overflow-x: hidden; /* Prevent breaking layout */
+            white-space: pre-wrap; /* Wrap long lines */
+            margin: 15px 0;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .keyword { color: #c678dd; }
+        .string { color: #98c379; }
+        .number { color: #d19a66; }
+        .key { color: #e06c75; }
+
+        /* Diagrams */
+        .diagram-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border: 1px dashed var(--border);
+            border-radius: 8px;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .flow-step:last-child { margin-bottom: 0; }
+        
+        .flow-arrow {
+            margin: 0 15px;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .flow-box {
+            font-weight: 600;
+            font-size: 9pt;
+            color: var(--primary);
+        }
+
+        /* Founder Profile Styles */
+        .founder-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            background-color: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--accent);
+        }
+
+        .founder-details h3 {
+            margin: 0 0 5px 0;
+            font-size: 16pt;
+            color: var(--primary);
+        }
+
+        .founder-details span {
+            font-size: 11pt;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .bio-section {
+            margin-bottom: 15px;
+        }
+
+        .bio-section h4 {
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* Page Numbers & Footer */
+        .page-footer {
+            position: absolute;
+            bottom: 10mm;
+            left: var(--margin);
+            right: var(--margin);
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8pt;
+            color: var(--text-muted);
+        }
+
+        @media print {
+            body { 
+                background: none; 
+                margin: 0; 
+                padding: 0; 
+            }
+            .page { 
+                margin: 0; 
+                box-shadow: none; 
+                page-break-after: always; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cover Page -->
+    <div class="page cover-page">
+        <div class="cover-content">
+            <div class="cover-logo">
+                <div class="logo-icon">
+                    <!-- Layer Icon (SVG) -->
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                </div>
+                DeSuite
+            </div>
+            <h1 class="cover-title">Implementing Stablecoin Transactions in Oracle Fusion ERP</h1>
+            <div class="cover-subtitle">A Compliance-First Framework for Enterprise Blockchain Integration</div>
+        </div>
+        <div class="cover-footer">
+            <div class="report-meta">
+                <div>PREPARED BY</div>
+                <span>Manish Kumar</span>
+                <div>DATE</div>
+                <span>15 Dec 2025</span>
+            </div>
+            <div class="report-meta" style="text-align: right;">
+                <div>DOCUMENT TYPE</div>
+                <span>Technical Whitepaper</span>
+                <div>VERSION</div>
+                <span>1.0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table of Contents & Abstract -->
+    <div class="page">
+        <div class="abstract-box">
+            <strong>Abstract:</strong> This whitepaper demonstrates the Oracle ERP-focused stablecoin integration research, with DeSuite as the orchestration layer. We outline a compliance-first, modular framework using Oracle Integration Cloud (OIC), Fusion Payables, Payments, General Ledger (GL), Cash Management, and Autonomous Transaction Processing (ATP), paired with Circle USDC APIs, smart contracts, and Chainlink oracles. The research presents an enterprise level adaptable framework for secure stablecoin integration into Oracle Fusion ERP Cloud, marking a significant milestone in Oracle ERP functionality in terms of faster cross-border settlement, lower cost, auditability, and improved liquidity management.
+        </div>
+
+        <div class="toc-title">Table of Contents</div>
+        
+        <div class="toc-item"><span>1. Introduction</span> <span>3</span></div>
+        <div class="toc-item sub"><span>1.1 Background on Cross-Border Transactions</span></div>
+        <div class="toc-item sub"><span>1.2 Limitations of Fiat Systems</span></div>
+        <div class="toc-item sub"><span>1.3 Emergence of Stablecoins</span></div>
+        <div class="toc-item sub"><span>1.4 Oracle ERP and Permissioned Blockchains</span></div>
+        <div class="toc-item sub"><span>1.5 DeSuite: Oracle-first Public Blockchain Middleware</span></div>
+        
+        <div class="toc-item"><span>2. Methodology — Oracle Fusion ERP Integration</span> <span>4</span></div>
+        <div class="toc-item sub"><span>2.1 Framework Design: OIC Integration</span></div>
+        <div class="toc-item sub"><span>2.2 Smart Contract Execution Flow</span></div>
+        <div class="toc-item sub"><span>2.3 Canonical Data Model</span></div>
+        <div class="toc-item sub"><span>2.4 Oracle Fusion ERP Modules & Integration Points</span></div>
+        <div class="toc-item sub"><span>2.5 Real-Time FX Handling via Chainlink</span></div>
+
+        <div class="toc-item"><span>3. Security & Compliance</span> <span>6</span></div>
+        <div class="toc-item"><span>4. Example: Oracle GL Journal Payload</span> <span>7</span></div>
+        <div class="toc-item"><span>5. BI Publisher Sample Reconciliation Reports</span> <span>8</span></div>
+        <div class="toc-item"><span>6. Deployment & Packaging</span> <span>9</span></div>
+        <div class="toc-item"><span>7. Results & Expected Impact</span> <span>9</span></div>
+        <div class="toc-item"><span>8. About the Founder</span> <span>10</span></div>
+
+        <div class="page-footer">
+            <span>DeSuite Strategic Brief</span>
+            <span>Page 2</span>
+        </div>
+    </div>
+
+    <!-- Content Page 1 -->
+    <div class="page">
+        <h2>1. Introduction</h2>
+        
+        <h3>1.1 Background on Cross-Border Transactions and Oracle Fusion ERP</h3>
+        <p>Oracle Fusion ERP Cloud underpins finance operations across multinational enterprises. Cross-border payments today rely on legacy correspondent banking rails (e.g., SWIFT, SEPA), introducing latency, costs, and compliance overheads. This paper recasts the Oracle methodology for Oracle Fusion ERP using OIC to orchestrate stablecoin settlements (USDC) and on-chain flows, with DeSuite as the canonical middleware.</p>
+
+        <h3>1.2 Limitations of Fiat and Traditional Payment Systems</h3>
+        <p>Traditional rails suffer from multi-day finality, multi-intermediary fees, and limited real-time visibility. In Oracle ERP contexts, this appears as longer AP cycles, manual reconciliation, batch-status dependencies, and delayed cash positioning.</p>
+
+        <h3>1.3 Emergence and Potential of Stablecoins</h3>
+        <p>Stablecoins are a new class of digital assets that seek to leverage the benefits of blockchain technology while providing the price stability associated with traditional fiat currencies. These assets, including USDC, USDT, EURC, XSGD, are pegged to real world currencies like the US Dollar, Euro or SGD, and therefore are designed to minimize volatility making them ideal for financial transactions that require stable value. Unlike other cryptocurrencies that tend to experience extreme price changes, stablecoins are generally backed by reserves stored in bank accounts or regulated custodians, or are controlled algorithmically through market incentives.</p>
+        
+        <p>These assets are constructed on blockchains because they offer transparency, auditability, and programmability. Permitting near-instant settlement is among the most important attributes of stablecoins. Unlike traditional payment schemes that process payments in batches or during restrictive banking hours, stablecoin payment systems operate 24/7, usually settling transactions in a matter of seconds. Stablecoins have the potential to greatly reduce time and costs associated with payments made internationally.</p>
+        
+        <p>Programmability is another distinct advantage. Stablecoins can be moved with smart contracts which allow payment to be made based on predefined conditions. For instance, a smart contract within an Oracle ERP workflow could be configured to automatically trigger payments when a shipment is acknowledged, or when a digital invoice is validated. Such features can improve the quality of financial workflows by mitigating fraud, errors, or delays.</p>
+
+        <h3>1.4 Oracle ERP and Permissioned Blockchains</h3>
+        <p>Oracle’s initiative to integrate enterprise systems with distributed ledger technologies is in the form of Oracle Blockchain Platform (OBP). However, this is based on a permissioned blockchain structure which makes it an island of sorts in terms of liquidity and interoperability. Apart from this, the use of blockchain technology in Oracle ERP systems remains limited because of lack of uniform standards, regulatory uncertainty, complex proprietary systems, and many other non-technical factors.</p>
+
+        <div class="page-footer">
+            <span>DeSuite Strategic Brief</span>
+            <span>Page 3</span>
+        </div>
+    </div>
+
+    <!-- Content Page 2 -->
+    <div class="page">
+        <h3>1.5 DeSuite: Oracle-first Public Blockchain Middleware</h3>
+        <p>Decentralized trust is the most important defining characteristic of blockchain technology, and the very same characteristic serves as an enhancement for ERP functions. Smart contracts enable further automation of processes in ERP systems, so the logic-based execution of invoice reconciliation, payment release, and order shipment can be done without human intervention. Such systems have the potential to not only lower transactional costs, but also expedite the transactions themselves.</p>
+        <p>DeSuite envisions the stablecoin cross-border payment system as an extension of the existing Oracle ERP financial modules, incorporating smart contracts alongside supplanted blockchain API endpoints. The integration framework is modular so that Oracle ERP’s internal logic and architecture are preserved and unaltered, yet still able to communicate with decentralized stablecoin ecosystems like Ethereum, Polygon and other public blockchain networks.</p>
+
+        <h3>DeSuite and OBP Comparison</h3>
+        
+        <!-- Inserted Content from One-Pager -->
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>FEATURE</th>
+                    <th>PUBLIC BLOCKCHAIN (VIA DESUITE)</th>
+                    <th>PERMISSIONED BLOCKCHAIN (VIA OBP)</th>
+                    <th>VERDICT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-feature">Liquidity</td>
+                    <td class="col-public"><strong>Global & Deep.</strong> Access established stablecoins (USDC) and global DeFi capital pools instantly.</td>
+                    <td class="col-perm"><strong>Walled Garden.</strong> Liquidity is trapped within the consortium. Assets are illiquid outside.</td>
+                    <td class="col-verdict">DeSuite Wins</td>
+                </tr>
+                <tr>
+                    <td class="col-feature">Interoperability</td>
+                    <td class="col-public"><strong>Universal Standards.</strong> Connects to any wallet or dApp globally via ERC-20/721.</td>
+                    <td class="col-perm"><strong>Bilateral Trust.</strong> Requires costly custom integration for every new counterparty.</td>
+                    <td class="col-verdict">DeSuite Wins</td>
+                </tr>
+                <tr>
+                    <td class="col-feature">Cost Basis</td>
+                    <td class="col-public"><strong>Low & Variable.</strong> Pay-as-you-go on shared infrastructure (L2s). No license fees.</td>
+                    <td class="col-perm"><strong>High Fixed Cost.</strong> High licensing, governance, and node maintenance fees.</td>
+                    <td class="col-verdict">DeSuite Wins</td>
+                </tr>
+                <tr>
+                    <td class="col-feature">Security</td>
+                    <td class="col-public"><strong>Decentralized.</strong> Guaranteed by billions in global economic consensus security.</td>
+                    <td class="col-perm"><strong>Centralized Risk.</strong> Relies entirely on the integrity of the founding consortium members.</td>
+                    <td class="col-verdict">DeSuite Wins</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- End Inserted Content -->
+
+        <h2>2. Methodology — Oracle Fusion ERP Integration</h2>
+        <p>DeSuite provides a canonical finance model (Invoice, Payment, LedgerEntry) and orchestrates Circle payouts and direct on-chain transfers via a unified API. For Oracle Fusion ERP, DeSuite integrates through OIC recipes and accelerators, normalizes webhooks, and posts GL journals with blockchain metadata (tx hash, network, fees, provider).</p>
+
+        <h3>2.1 Framework Design: Integrating Stablecoin APIs via OIC</h3>
+        <p>Business events from Fusion Payables (e.g., Invoice Ready for Payment) trigger OIC flows. For Circle, OIC invokes Circle APIs; for on-chain, OIC calls DeSuite’s Node.js Signer Utility (Phase 1) or Unified Orchestrator (Phase 2). Confirmations arrive via HMAC-signed webhooks into OIC, which updates Oracle Payables and posts GL entries (REST or FBDI).</p>
+        
+        <p><strong>Key Oracle components:</strong></p>
+        <ul>
+            <li><strong>Oracle Integration Cloud (OIC):</strong> REST/ERP Cloud Adapters; Insight; Lookups.</li>
+            <li><strong>Oracle Fusion Payables & Payments:</strong> source events and payment lifecycle updates.</li>
+            <li><strong>Oracle Fusion General Ledger (GL) & SLA:</strong> journal posting and attributes.</li>
+            <li><strong>Oracle Cash Management:</strong> cash position, bank accounts; optional stablecoin wallet references.</li>
+            <li><strong>Oracle Autonomous Transaction Processing (ATP):</strong> idempotency, correlation, audit trail.</li>
+            <li><strong>Oracle Cloud Infrastructure (OCI) Vault:</strong> secrets (API keys, HMAC, RPC URLs).</li>
+        </ul>
+
+        <div class="page-footer">
+            <span>DeSuite Strategic Brief</span>
+            <span>Page 4</span>
+        </div>
+    </div>
+
+    <!-- Content Page 3 -->
+    <div class="page">
+        <h3>2.2 Smart Contract Execution Flow</h3>
+        <p>Upon AP readiness, OIC constructs a settlement request with a deterministic idempotency key and routes it per policy to Circle or On-Chain. On-chain transfers are signed by DeSuite Signer Utility (Node.js, Phase 1) using keys from OCI Vault; transaction is broadcast via RPC. Chainlink price oracles may supply FX conversion for ledger narratives. Webhooks (HMAC) return tx hash and confirmations to OIC. OIC updates Payables and posts GL journals with provider/network/tx_hash attributes.</p>
+
+        <h3>2.3 Canonical Data Model</h3>
+        <p>The following JSON object illustrates the standardized data structure used to communicate between Oracle ERP and the blockchain layer.</p>
+        
+        <div class="code-block">
+{
+  <span class="key">"Invoice"</span>: {
+    <span class="key">"invoiceId"</span>: <span class="string">"INV-20251215-001"</span>,
+    <span class="key">"supplierId"</span>: <span class="string">"SUP-987654"</span>,
+    <span class="key">"amount"</span>: <span class="string">"15000.00"</span>,
+    <span class="key">"currency"</span>: <span class="string">"USD"</span>,
+    <span class="key">"status"</span>: <span class="string">"Ready for Payment"</span>
+  },
+  <span class="key">"Payment"</span>: {
+    <span class="key">"requestId"</span>: <span class="string">"REQ-20251215-ABC123"</span>,
+    <span class="key">"idempotencyKey"</span>: <span class="string">"IDEMP-XYZ789"</span>,
+    <span class="key">"provider"</span>: <span class="string">"circle"</span>,
+    <span class="key">"network"</span>: <span class="string">"ETH"</span>,
+    <span class="key">"token"</span>: <span class="string">"USDC"</span>,
+    <span class="key">"status"</span>: <span class="string">"Completed"</span>
+  },
+  <span class="key">"LedgerEntry"</span>: {
+    <span class="key">"journalSource"</span>: <span class="string">"DeSuite"</span>,
+    <span class="key">"attributes"</span>: {
+      <span class="key">"tx_hash"</span>: <span class="string">"0xabc123..."</span>,
+      <span class="key">"requestId"</span>: <span class="string">"REQ-20251215-ABC123"</span>
+    }
+  }
+}</div>
+
+        <h3>2.4 Oracle Fusion ERP Modules & Integration Points</h3>
+        
+        <div class="diagram-container">
+            <div class="flow-step">
+                <div class="flow-box">Payables (AP)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Event: Invoice Ready</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Circle API / DeSuite Orchestrator</div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-box">General Ledger (GL)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Journal Posting with Metadata</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">OIC REST / FBDI</div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-box">OIC</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Orchestration & Webhooks</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">DeSuite Signer</div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-box">OCI Vault</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Secrets Management</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">DeSuite Services</div>
+            </div>
+        </div>
+
+        <h3>2.5 Real-Time FX Handling via Chainlink</h3>
+        <p>DeSuite can query Chainlink oracles for FX rates to annotate GL narratives and reconciliation reports. Oracle ERP retains functional currency accounting; stablecoin amounts are recorded in the journal lines and attributes.</p>
+
+        <div class="page-footer">
+            <span>DeSuite Strategic Brief</span>
+            <span>Page 5</span>
+        </div>
+    </div>
+
+    <!-- Content Page 4 -->
+    <div class="page">
+        <h2>3. Security & Compliance</h2>
+        <p>Controls aligned to MAS and enterprise standards:</p>
+        <ul>
+            <li><strong>Secrets Management:</strong> Secrets in OCI Vault; least-privilege IAM; rotate and monitor.</li>
+            <li><strong>Verification:</strong> Webhook HMAC verification; timestamp/nonce; IP allowlists.</li>
+            <li><strong>Idempotency:</strong> Idempotency keys to prevent double-spend; ATP event dedupe.</li>
+            <li><strong>Audit Trails:</strong> Immutable logs; GL attributes: provider, network, tx_hash, requestId.</li>
+            <li><strong>Custody:</strong> Key custody migration path: MVP hot wallet → MPC/HSM custody (Phase 2–3).</li>
+            <li><strong>Policy Engine:</strong> Transaction caps, jurisdiction gating, vendor KYC flags (stored in ERP vendor master extensions).</li>
+        </ul>
+
+        <h2>4. Example: Oracle GL Journal Payload (REST)</h2>
+        <p>This payload demonstrates how on-chain data is formatted for ingestion into Oracle General Ledger.</p>
+        
+        <div class="code-block">
+{
+  <span class="key">"ledger"</span>: <span class="string">"Primary Ledger"</span>,
+  <span class="key">"accountingDate"</span>: <span class="string">"2025-01-02"</span>,
+  <span class="key">"journalCategory"</span>: <span class="string">"Blockchain Settlement"</span>,
+  <span class="key">"lines"</span>: [
+    {
+      <span class="key">"account"</span>: <span class="string">"2010-AP-USDC"</span>,
+      <span class="key">"debit"</span>: <span class="string">"1250.00"</span>,
+      <span class="key">"description"</span>: <span class="string">"Invoice INV-12345 paid via USDC"</span>
+    },
+    {
+      <span class="key">"account"</span>: <span class="string">"6090-Network-Fees"</span>,
+      <span class="key">"debit"</span>: <span class="string">"2.10"</span>,
+      <span class="key">"description"</span>: <span class="string">"Network fee"</span>
+    }
+  ],
+  <span class="key">"attributes"</span>: {
+    <span class="key">"provider"</span>: <span class="string">"onchain"</span>,
+    <span class="key">"transactionHash"</span>: <span class="string">"0xabc123def..."</span>,
+    <span class="key">"gasFee"</span>: <span class="string">"0.00042 ETH"</span>
+  }
+}</div>
+
+        <div class="page-footer">
+            <span>DeSuite Strategic Brief</span>
+            <span>Page 6</span>
+        </div>
+    </div>
+
+    <!-- Content Page 5 -->
+    <div class="page">
+        <h2>5. BI Publisher Sample Reconciliation Reports</h2>
+        <p><strong>Purpose:</strong> Provide finance teams a single view to reconcile ERP vs settlement state (Circle/On-Chain).</p>
+        <p><strong>Data Sources:</strong> Oracle Fusion ERP (Payables, GL), Oracle ATP (DeSuite ledger), DeSuite Orchestrator.</p>
+        
+        <h4>Sample SQL (ATP Data Model)</h4>
+        <div class="code-block">
+<span class="keyword">SELECT</span>
+  p.invoice_id, p.supplier_id, p.amount, p.currency,
+  p.provider, p.network, p.token, p.request_id,
+  p.status, p.tx_hash, p.confirmations, p.created_at,
+  e.event_id, e.type <span class="keyword">AS</span> event_type,
+  g.journal_id, g.total_debit, g.total_credit
+<span class="keyword">FROM</span> DESUITE_PAYMENTS p,
+     DESUITE_EVENTS e,
+     DESUITE_GL_SUMMARY g
+<span class="keyword">WHERE</span> e.request_id(+) = p.request_id
+  <span class="keyword">AND</span> g.request_id(+) = p.request_id
+  <span class="keyword">AND</span> p.created_at <span class="keyword">BETWEEN</span> :P_START_DATE <span class="keyword">AND</span> :P_END_DATE
+<span class="keyword">ORDER BY</span> p.created_at <span class="keyword">DESC</span>;</div>
+
+        <h3>Recommended Layouts</h3>
+        <ul>
+            <li><strong>Recon Summary:</strong> Counts by provider/network, completed/failed/pending.</li>
+            <li><strong>Variance View:</strong> Invoice amount vs settled amount, fee impact, FX adjustments.</li>
+            <li><strong>Exception List:</strong> Stalled transactions, failed webhooks, GL posting errors.</li>
+        </ul>
+
+        <h2>6. Deployment & Packaging</h2>
+        <p>Promote OIC packages across DEV > TEST > PROD with externalized lookups and Vault references. Publish recipes/accelerators:</p>
+        <ul>
+            <li>Invoice → USDC Payment (Circle & On-Chain options).</li>
+            <li>Webhook → ERP update + GL journal posting.</li>
+            <li>Reconciliation → periodic status check and BI reports.</li>
+        </ul>
+
+        <h2>7. Results & Expected Impact</h2>
+        <p>Based on the internal empirical results, enterprises can expect significant latency reduction (minutes vs hours) and lower per-transaction fees (cents vs dollars) when adopting stablecoin rails for cross-border payments, with improved auditability and liquidity management.</p>
+
+        <div class="page-footer">
+            <span>DeSuite Strategic Brief</span>
+            <span>Page 7</span>
+        </div>
+    </div>
+
+    <!-- Founder's Page -->
+    <div class="page">
+        <h2>8. About the Founder</h2>
+        
+        <div class="founder-header">
+            <div class="founder-details">
+                <h3>Manish Kumar</h3>
+                <span>Founder & CEO, DeSuite</span>
+            </div>
+        </div>
+
+        <p>A visionary leader at the intersection of enterprise technology and decentralized innovation, Manish is the driving force behind DeSuite. With a unique blend of deep corporate ERP expertise and advanced Web3 technical proficiency, Manish is uniquely positioned to architect solutions that bridge the complex divide between traditional enterprise systems and the transformative power of blockchain.</p>
+
+        <div class="bio-section">
+            <h4>Professional Journey: Mastering Enterprise Systems</h4>
+            <p>Manish's professional journey spans over <strong>11 years of dedicated experience</strong> in the intricate world of Oracle ERP, focusing on both Oracle E-Business Suite and cutting-edge Oracle Fusion Cloud ERP. This extensive tenure has cultivated a profound understanding of enterprise financial and operational processes.</p>
+            <p>As a <strong>Senior Engineer</strong> at industry giants like Accenture and Oracle, Manish honed a robust technical skillset, becoming proficient in critical Oracle technologies including:</p>
+            <ul>
+                <li><strong>SQL & PL/SQL:</strong> For advanced data manipulation and reporting.</li>
+                <li><strong>Oracle Business Intelligence Publisher (BIP):</strong> Crafting complex financial and operational reports.</li>
+                <li><strong>Oracle Integration Cloud (OIC):</strong> Designing and implementing seamless integrations across diverse systems.</li>
+                <li><strong>Visual Builder Cloud Service (VBCS):</strong> Developing intuitive and powerful user interfaces and extensions for Oracle Cloud Applications.</li>
+            </ul>
+            <p>Beyond technical mastery, Manish possesses a comprehensive understanding of Oracle Financials Functional aspects, allowing for the design of solutions that are not only technically sound but also align perfectly with core business requirements and compliance standards. Currently, Manish is leveraging this invaluable experience as a contract resource for an Oracle ERP Cloud Financials implementation project at OCBC, Singapore.</p>
+        </div>
+
+        <div class="bio-section">
+            <h4>Pioneering Web3: A Passion for Decentralization</h4>
+            <p>Parallel to a distinguished career in enterprise IT, Manish has been a fervent pioneer in the cryptocurrency and blockchain space since 2017. This passion extends beyond theoretical understanding, encompassing:</p>
+            <ul>
+                <li><strong>Active Investor & Trader:</strong> Consistently growing a portfolio through strategic investment and active engagement in the crypto markets, demonstrating a deep understanding of market dynamics and asset management in the digital realm.</li>
+                <li><strong>Blockchain Technical Expertise:</strong> Proficient in Solidity for smart contract development and a comprehensive understanding of the Ethereum ecosystem, enabling the creation of secure and efficient decentralized applications.</li>
+                <li><strong>Certified Specialist:</strong> IBM Certified Blockchain Solution Advisor (Validating expertise in designing and advising on enterprise blockchain strategies) and B9Lab Certified Ethereum Smart Contract Developer (Underscoring a proven ability to develop, test, and deploy robust smart contracts on the Ethereum platform).</li>
+            </ul>
+        </div>
+
+        <div class="bio-section">
+            <h4>DeSuite: The Convergence of Two Worlds</h4>
+            <p>The establishment of DeSuite is the natural evolution of this unique dual expertise. Manish's ability to speak the language of both traditional CFOs and blockchain developers positions DeSuite to effectively bridge the enterprise Web3 divide. This profound understanding of both the "source of truth" within ERP systems and the immutable nature of decentralized ledgers is the cornerstone of DeSuite's mission to deliver secure, compliant, and transformative solutions for enterprise digital asset management and Web3 integration.</p>
+        </div>
+
+        <div class="page-footer">
+            <span>DeSuite Strategic Brief</span>
+            <span>Page 8</span>
+        </div>
+    </div>
+
+</body>
+</html>

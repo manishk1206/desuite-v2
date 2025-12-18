@@ -65,7 +65,7 @@ const WhyDeSuiteSection = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            Download Strategic Brief (PDF)
+                            Download Strategic Brief One-Pager (PDF)
                         </a>
                     </CustomButton>
                 </div>
