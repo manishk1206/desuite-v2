@@ -83,9 +83,14 @@ export function HeroSection({}: HeroSectionProps) {
             variant="outline"
             asChild
           >
-            <a href="#how-it-works" data-testid="link-hero-learn-more">
-              Learn More
-            </a>
+            <a 
+            href="/full_technical_whitepaper.pdf" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            data-testid="link-hero-learn-more"
+>
+  Learn More
+</a>
           </Button>
         </motion.div>
 
