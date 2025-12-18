@@ -23,77 +23,101 @@ export function HeroSection({}: HeroSectionProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-6">
-            <Sparkles className="w-3 h-3" />
-            <span>NEW: ORACLE FUSION STABLECOIN INTEGRATION</span>
-          </div>
-          
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-display font-bold tracking-tight text-foreground mb-6">
-            The Bridge Between <span className="gradient-text">Oracle ERP</span> <br />
-            and Digital Assets
-          </h1>
-          
-          <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-            Enterprise-grade orchestration layer for secure, compliant stablecoin transactions 
-            and real-time reconciliation directly within your Oracle environment.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            {/* CTA 1: Book Demo */}
-            <Button 
-              size="lg" 
-              className="w-full sm:w-auto text-lg h-14 px-8 rounded-xl shadow-lg shadow-primary/20"
-              onClick={() => window.location.href = "mailto:manish@desuite.org?subject=Schedule%20a%20Demo"}
-            >
-              Book a Demo
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            
-            {/* CTA 2: Learn More -> MODIFIED: Link to Whitepaper HTML file */}
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="w-full sm:w-auto text-lg h-14 px-8 rounded-xl bg-background/50 backdrop-blur-sm"
-              onClick={() => window.open("/full_technical_whitepaper.html", "_blank")}
-            >
-              Learn More
-            </Button>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium text-primary">Enterprise Web3 Infrastructure</span>
           </div>
         </motion.div>
 
-        {/* --- MODIFIED: Changed max-w-4xl to max-w-5xl for the Dashboard card area --- */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          // --- UPDATED: Adjusted lg:size down to 5xl for better fit on laptops, kept xl:text-7xl for monitors. ---
+          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-7xl font-bold tracking-tight mb-6"
+          data-testid="text-hero-title"
+        >
+          <span className="gradient-text">Stablecoin & Tokenization</span>
+          <br />
+          <span>Layer for Oracle ERP</span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          // --- UPDATED: Adjusted lg:size down to xl for better readability on laptops. ---
+          className="text-lg sm:text-xl lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
+          data-testid="text-hero-subtitle"
+        >
+          Bridge your enterprise Oracle systems with Web3 infrastructure. 
+          Enable seamless stablecoin payments, asset tokenization, and public blockchain 
+          integration without disrupting existing workflows.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          {/* MODIFIED: Changed Button to use asChild for a direct Calendly link */}
+          <Button
+            size="lg"
+            asChild
+            data-testid="button-hero-book-demo"
+          >
+            <a 
+                href="https://calendly.com/manishk1206/30min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center" 
+            > 
+                Book a Demo
+                <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            asChild
+          >
+            <a href="#how-it-works" data-testid="link-hero-learn-more">
+              Learn More
+            </a>
+          </Button>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative max-w-5xl mx-auto"
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="mt-16 sm:mt-20"
         >
-          <div className="glass-card rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative">
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-transparent opacity-50" />
-            <div className="relative p-4 sm:p-8">
-              <div className="flex items-center justify-between mb-8 border-b border-white/10 pb-4">
-                <div className="flex gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500/50" />
-                  <div className="w-3 h-3 rounded-full bg-amber-500/50" />
-                  <div className="w-3 h-3 rounded-full bg-green-500/50" />
-                </div>
-                <div className="text-xs text-muted-foreground font-mono">DESUITE_ORACLE_MODULE_v1.0.4</div>
+          {/* --- MODIFIED: Changed max-w-3xl to max-w-5xl (1024px) for wider card preview --- */}
+          <div className="relative mx-auto max-w-5xl">
+            {/* RESTORED: Original card glow gradient (primary, chart-4, chart-2) */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-chart-4/20 to-chart-2/20 rounded-2xl blur-xl" />
+            <div className="relative bg-card border border-border rounded-xl p-4 sm:p-6 shadow-xl animate-float">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-3 h-3 rounded-full bg-red-400" />
+                <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                <div className="w-3 h-3 rounded-full bg-green-400" />
+                <span className="ml-2 text-xs text-muted-foreground font-mono">desuite-dashboard</span>
               </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-                <div className="bg-accent/50 rounded-lg p-3 sm:p-4 text-left" data-testid="stat-volume">
+              <div className="grid grid-cols-3 gap-3 sm:gap-4">
+                <div className="bg-accent/50 rounded-lg p-3 sm:p-4" data-testid="stat-volume">
                   <div className="text-xs text-muted-foreground mb-1">Total Volume</div>
-                  <div className="text-lg sm:text-xl font-display font-semibold" data-testid="text-volume-value">$4.2M</div>
+                  <div className="text-lg sm:text-xl font-display font-semibold" data-testid="text-volume-value">$2.4M</div>
                   <div className="text-xs text-green-500 mt-1">+12.5%</div>
                 </div>
-                <div className="bg-accent/50 rounded-lg p-3 sm:p-4 text-left" data-testid="stat-transactions">
+                <div className="bg-accent/50 rounded-lg p-3 sm:p-4" data-testid="stat-transactions">
                   <div className="text-xs text-muted-foreground mb-1">Transactions</div>
                   <div className="text-lg sm:text-xl font-display font-semibold" data-testid="text-transactions-value">1,284</div>
                   <div className="text-xs text-green-500 mt-1">+8.3%</div>
                 </div>
-                <div className="bg-accent/50 rounded-lg p-3 sm:p-4 text-left" data-testid="stat-assets">
+                <div className="bg-accent/50 rounded-lg p-3 sm:p-4" data-testid="stat-assets">
                   <div className="text-xs text-muted-foreground mb-1">Assets</div>
                   <div className="text-lg sm:text-xl font-display font-semibold" data-testid="text-assets-value">48</div>
                   <div className="text-xs text-muted-foreground mt-1">Tokenized</div>
